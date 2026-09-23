@@ -1,61 +1,997 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DesapegaAí</title>
-<style>
-body{margin:0;font-family:Arial;background:#f5f5f5;color:#222}
-header{background:#ff6900;color:white;padding:20px}
-h1{margin:0}
-input,button{padding:14px;border-radius:10px;border:0;margin-top:12px}
-input{width:90%}
-main{padding:18px}
-.card{background:white;padding:15px;margin:12px 0;border-radius:14px}
-.price{font-size:20px;font-weight:bold}
-button{background:#ff6900;color:white;font-weight:bold}
-nav{position:fixed;bottom:0;width:100%;background:white;padding:15px;text-align:center}
-</style>
+
+  <!-- Configurações -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Nome do aplicativo -->
+  <title>DesapegaAí</title>
+
+  <!-- Cor do aplicativo -->
+  <meta name="theme-color" content="#ff6500">
+
+  <!-- Manifesto -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- Estilos -->
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #222;
+      padding-bottom: 90px;
+    }
+
+    /* CABEÇALHO */
+
+    header {
+      background: #ff6500;
+      color: white;
+      padding: 25px 18px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
+
+    /* PESQUISA */
+
+    #pesquisa {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    /* CONTEÚDO */
+
+    main {
+      padding: 20px 16px;
+    }
+
+    .titulo {
+      font-size: 27px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    /* PRODUTO */
+
+    .produto {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .foto-produto {
+      width: 100%;
+      height: 190px;
+      border-radius: 14px;
+      background: #eeeeee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 65px;
+      margin-bottom: 14px;
+    }
+
+    .foto-produto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .produto h2 {
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
+
+    .descricao {
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .preco {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    /* BOTÕES */
+
+    .botao {
+      width: 100%;
+      padding: 14px;
+      background: #ff6500;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .botao:active {
+      transform: scale(0.98);
+    }
+
+    /* TELAS */
+
+    .tela {
+      display: none;
+    }
+
+    .tela.ativa {
+      display: block;
+    }
+
+    /* FORMULÁRIO */
+
+    .formulario {
+      background: white;
+      padding: 18px;
+      border-radius: 18px;
+    }
+
+    .formulario label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 7px;
+    }
+
+    .formulario input,
+    .formulario textarea,
+    .formulario select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .formulario textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* CHAT */
+
+    .caixa {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    /* MENU INFERIOR */
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 4px;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.15);
+      z-index: 100;
+    }
+
+    nav button {
+      background: transparent;
+      border: none;
+      color: #333;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    nav button span {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 3px;
+    }
+
+    /* SEM PRODUTOS */
+
+    .sem-produtos {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      text-align: center;
+      color: #777;
+    }
+
+  </style>
+
 </head>
+
+
 <body>
 
-<header>
-<h1>DesapegaAí</h1>
-<p>Compre, venda e desapegue.</p>
-<input id="busca" placeholder="🔎 O que você procura?" oninput="buscar()">
-</header>
 
-<main>
-<h2>🛍️ Produtos</h2>
-<div id="produtos"></div>
-</main>
+  <!-- ========================= -->
+  <!-- CABEÇALHO -->
+  <!-- ========================= -->
 
-<nav>
-🏠 Início　 💬 Chat　 ➕ Vender　 👤 Perfil
-</nav>
+  <header>
 
-<script>
-let produtos=[
-["📱","Celular usado","R$ 700"],
-["🚲","Bicicleta usada","R$ 450"],
-["🎮","Videogame","R$ 900"],
-["🛋️","Sofá usado","R$ 350"]
-];
+    <h1>DesapegaAí</h1>
 
-function buscar(){
- let q=document.getElementById("busca").value.toLowerCase();
- document.getElementById("produtos").innerHTML=
- produtos.filter(p=>p[1].toLowerCase().includes(q))
- .map(p=>`
- <div class="card">
- <div style="font-size:50px">${p[0]}</div>
- <h3>${p[1]}</h3>
- <div class="price">${p[2]}</div>
- <button onclick="alert('Chat com o vendedor')">💬 Falar com vendedor</button>
- </div>`).join("");
-}
-buscar();
-</script>
+    <p>
+      Compre, venda e desapegue.
+    </p>
+
+    <input
+      id="pesquisa"
+      type="search"
+      placeholder="🔎 O que você procura?"
+    >
+
+  </header>
+
+
+  <!-- ========================= -->
+  <!-- CONTEÚDO -->
+  <!-- ========================= -->
+
+  <main>
+
+
+    <!-- INÍCIO -->
+
+    <section
+      id="inicio"
+      class="tela ativa"
+    >
+
+      <div class="titulo">
+        🛍️ Produtos
+      </div>
+
+      <div id="listaProdutos"></div>
+
+    </section>
+
+
+    <!-- VENDER -->
+
+    <section
+      id="vender"
+      class="tela"
+    >
+
+      <div class="titulo">
+        ➕ Vender produto
+      </div>
+
+      <div class="formulario">
+
+        <label>
+          Nome do produto
+        </label>
+
+        <input
+          id="nomeProduto"
+          type="text"
+          placeholder="Ex.: Celular usado"
+        >
+
+
+        <label>
+          Preço
+        </label>
+
+        <input
+          id="precoProduto"
+          type="number"
+          placeholder="Ex.: 700"
+        >
+
+
+        <label>
+          Categoria
+        </label>
+
+        <select id="categoriaProduto">
+
+          <option>
+            Eletrônicos
+          </option>
+
+          <option>
+            Celulares
+          </option>
+
+          <option>
+            Veículos
+          </option>
+
+          <option>
+            Bicicletas
+          </option>
+
+          <option>
+            Roupas
+          </option>
+
+          <option>
+            Casa
+          </option>
+
+          <option>
+            Esportes
+          </option>
+
+          <option>
+            Outros
+          </option>
+
+        </select>
+
+
+        <label>
+          Descrição
+        </label>
+
+        <textarea
+          id="descricaoProduto"
+          placeholder="Descreva o produto..."
+        ></textarea>
+
+
+        <label>
+          Foto do produto
+        </label>
+
+        <input
+          id="fotoProduto"
+          type="file"
+          accept="image/*"
+        >
+
+
+        <br>
+        <br>
+
+        <button
+          class="botao"
+          onclick="publicarProduto()"
+        >
+          🚀 Publicar anúncio
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- CHAT -->
+
+    <section
+      id="chat"
+      class="tela"
+    >
+
+      <div class="titulo">
+        💬 Chat
+      </div>
+
+      <div class="caixa">
+
+        <h2>
+          Suas conversas
+        </h2>
+
+        <br>
+
+        <p>
+          Quando você conversar com um vendedor,
+          a conversa aparecerá aqui.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- PERFIL -->
+
+    <section
+      id="perfil"
+      class="tela"
+    >
+
+      <div class="titulo">
+        👤 Meu perfil
+      </div>
+
+      <div class="caixa">
+
+        <h2>
+          DesapegaAí
+        </h2>
+
+        <br>
+
+        <p>
+          Área do usuário.
+        </p>
+
+        <br>
+
+        <button
+          class="botao"
+          onclick="alert('O cadastro será adicionado na próxima etapa.')"
+        >
+          Criar minha conta
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- ========================= -->
+  <!-- MENU -->
+  <!-- ========================= -->
+
+  <nav>
+
+    <button onclick="abrirTela('inicio')">
+
+      <span>
+        🏠
+      </span>
+
+      Início
+
+    </button>
+
+
+    <button onclick="abrirTela('chat')">
+
+      <span>
+        💬
+      </span>
+
+      Chat
+
+    </button>
+
+
+    <button onclick="abrirTela('vender')">
+
+      <span>
+        ➕
+      </span>
+
+      Vender
+
+    </button>
+
+
+    <button onclick="abrirTela('perfil')">
+
+      <span>
+        👤
+      </span>
+
+      Perfil
+
+    </button>
+
+  </nav>
+
+
+  <!-- ========================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ========================= -->
+
+  <script>
+
+    /*
+      PRODUTOS INICIAIS
+    */
+
+    let produtos = [
+
+      {
+        nome: "Celular usado",
+        preco: 700,
+        categoria: "Celulares",
+        descricao: "Celular usado em bom estado.",
+        foto: "",
+        emoji: "📱"
+      },
+
+      {
+        nome: "Bicicleta usada",
+        preco: 450,
+        categoria: "Bicicletas",
+        descricao: "Bicicleta usada em bom estado.",
+        foto: "",
+        emoji: "🚲"
+      }
+
+    ];
+
+
+    /*
+      CARREGAR PRODUTOS SALVOS
+    */
+
+    const produtosSalvos =
+      localStorage.getItem("desapegai_produtos");
+
+
+    if (produtosSalvos) {
+
+      produtos =
+        JSON.parse(produtosSalvos);
+
+    }
+
+
+    /*
+      SALVAR PRODUTOS
+    */
+
+    function salvarProdutos() {
+
+      localStorage.setItem(
+        "desapegai_produtos",
+        JSON.stringify(produtos)
+      );
+
+    }
+
+
+    /*
+      MOSTRAR PRODUTOS
+    */
+
+    function mostrarProdutos(lista) {
+
+      const area =
+        document.getElementById("listaProdutos");
+
+
+      area.innerHTML = "";
+
+
+      if (lista.length === 0) {
+
+        area.innerHTML = `
+
+          <div class="sem-produtos">
+
+            <h3>
+              Nenhum produto encontrado.
+            </h3>
+
+            <br>
+
+            <p>
+              Tente pesquisar outro produto.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      lista.forEach(function(produto) {
+
+
+        const card =
+          document.createElement("div");
+
+
+        card.className =
+          "produto";
+
+
+        let imagem;
+
+
+        if (produto.foto) {
+
+          imagem = `
+
+            <div class="foto-produto">
+
+              <img
+                src="${produto.foto}"
+                alt="${produto.nome}"
+              >
+
+            </div>
+
+          `;
+
+        } else {
+
+          imagem = `
+
+            <div class="foto-produto">
+
+              ${produto.emoji || "📦"}
+
+            </div>
+
+          `;
+
+        }
+
+
+        card.innerHTML = `
+
+          ${imagem}
+
+          <h2>
+            ${produto.nome}
+          </h2>
+
+          <p class="descricao">
+            ${produto.descricao || "Sem descrição."}
+          </p>
+
+          <div class="preco">
+
+            R$
+            ${Number(produto.preco)
+              .toFixed(2)
+              .replace(".", ",")}
+
+          </div>
+
+          <button
+            class="botao"
+            onclick="falarComVendedor()"
+          >
+
+            💬 Falar com vendedor
+
+          </button>
+
+        `;
+
+
+        area.appendChild(card);
+
+      });
+
+    }
+
+
+    /*
+      PESQUISAR
+    */
+
+    document
+      .getElementById("pesquisa")
+      .addEventListener(
+        "input",
+        function() {
+
+          const texto =
+            this.value.toLowerCase();
+
+
+          const resultado =
+            produtos.filter(function(produto) {
+
+              return (
+
+                produto.nome
+                  .toLowerCase()
+                  .includes(texto)
+
+                ||
+
+                produto.categoria
+                  .toLowerCase()
+                  .includes(texto)
+
+                ||
+
+                produto.descricao
+                  .toLowerCase()
+                  .includes(texto)
+
+              );
+
+            });
+
+
+          mostrarProdutos(resultado);
+
+        }
+      );
+
+
+    /*
+      ABRIR TELAS
+    */
+
+    function abrirTela(nome) {
+
+
+      const telas =
+        document.querySelectorAll(".tela");
+
+
+      telas.forEach(function(tela) {
+
+        tela.classList.remove("ativa");
+
+      });
+
+
+      document
+        .getElementById(nome)
+        .classList.add("ativa");
+
+
+      window.scrollTo(
+        0,
+        0
+      );
+
+    }
+
+
+    /*
+      PUBLICAR PRODUTO
+    */
+
+    function publicarProduto() {
+
+
+      const nome =
+        document
+          .getElementById("nomeProduto")
+          .value
+          .trim();
+
+
+      const preco =
+        document
+          .getElementById("precoProduto")
+          .value;
+
+
+      const categoria =
+        document
+          .getElementById("categoriaProduto")
+          .value;
+
+
+      const descricao =
+        document
+          .getElementById("descricaoProduto")
+          .value
+          .trim();
+
+
+      const arquivo =
+        document
+          .getElementById("fotoProduto")
+          .files[0];
+
+
+      if (!nome) {
+
+        alert(
+          "Digite o nome do produto."
+        );
+
+        return;
+
+      }
+
+
+      if (!preco) {
+
+        alert(
+          "Digite o preço."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        SE TIVER FOTO
+      */
+
+      if (arquivo) {
+
+
+        const leitor =
+          new FileReader();
+
+
+        leitor.onload =
+          function(evento) {
+
+
+            adicionarProduto(
+
+              nome,
+
+              preco,
+
+              categoria,
+
+              descricao,
+
+              evento.target.result
+
+            );
+
+          };
+
+
+        leitor.readAsDataURL(
+          arquivo
+        );
+
+
+      } else {
+
+
+        adicionarProduto(
+
+          nome,
+
+          preco,
+
+          categoria,
+
+          descricao,
+
+          ""
+
+        );
+
+      }
+
+    }
+
+
+    /*
+      ADICIONAR PRODUTO
+    */
+
+    function adicionarProduto(
+
+      nome,
+      preco,
+      categoria,
+      descricao,
+      foto
+
+    ) {
+
+
+      produtos.unshift({
+
+        nome: nome,
+
+        preco: Number(preco),
+
+        categoria: categoria,
+
+        descricao: descricao,
+
+        foto: foto,
+
+        emoji: "📦"
+
+      });
+
+
+      salvarProdutos();
+
+
+      mostrarProdutos(
+        produtos
+      );
+
+
+      document
+        .getElementById("nomeProduto")
+        .value = "";
+
+
+      document
+        .getElementById("precoProduto")
+        .value = "";
+
+
+      document
+        .getElementById("descricaoProduto")
+        .value = "";
+
+
+      document
+        .getElementById("fotoProduto")
+        .value = "";
+
+
+      alert(
+        "🎉 Anúncio publicado com sucesso!"
+      );
+
+
+      abrirTela(
+        "inicio"
+      );
+
+    }
+
+
+    /*
+      CHAT
+    */
+
+    function falarComVendedor() {
+
+      abrirTela(
+        "chat"
+      );
+
+      alert(
+        "O sistema de mensagens será conectado na próxima etapa."
+      );
+
+    }
+
+
+    /*
+      INICIAR APLICATIVO
+    */
+
+    mostrarProdutos(
+      produtos
+    );
+
+  </script>
+
 
 </body>
-</html>
+
+       </html>de 
