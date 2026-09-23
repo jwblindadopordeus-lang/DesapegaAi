@@ -524,6 +524,14 @@
     carregarProdutos();
 
   </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(() => console.log("DesapegaAí pronto para instalação"))
+      .catch((erro) => console.log("Erro:", erro));
+  });
+}
+</script>
 </body>
 </html>
