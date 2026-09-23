@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DesapegaAí</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5;color:#222}
+header{background:#ff6900;color:white;padding:20px}
+h1{margin:0}
+input,button{padding:14px;border-radius:10px;border:0;margin-top:12px}
+input{width:90%}
+main{padding:18px}
+.card{background:white;padding:15px;margin:12px 0;border-radius:14px}
+.price{font-size:20px;font-weight:bold}
+button{background:#ff6900;color:white;font-weight:bold}
+nav{position:fixed;bottom:0;width:100%;background:white;padding:15px;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+<h1>DesapegaAí</h1>
+<p>Compre, venda e desapegue.</p>
+<input id="busca" placeholder="🔎 O que você procura?" oninput="buscar()">
+</header>
+
+<main>
+<h2>🛍️ Produtos</h2>
+<div id="produtos"></div>
+</main>
+
+<nav>
+🏠 Início　 💬 Chat　 ➕ Vender　 👤 Perfil
+</nav>
+
+<script>
+let produtos=[
+["📱","Celular usado","R$ 700"],
+["🚲","Bicicleta usada","R$ 450"],
+["🎮","Videogame","R$ 900"],
+["🛋️","Sofá usado","R$ 350"]
+];
+
+function buscar(){
+ let q=document.getElementById("busca").value.toLowerCase();
+ document.getElementById("produtos").innerHTML=
+ produtos.filter(p=>p[1].toLowerCase().includes(q))
+ .map(p=>`
+ <div class="card">
+ <div style="font-size:50px">${p[0]}</div>
+ <h3>${p[1]}</h3>
+ <div class="price">${p[2]}</div>
+ <button onclick="alert('Chat com o vendedor')">💬 Falar com vendedor</button>
+ </div>`).join("");
+}
+buscar();
+</script>
+
+</body>
+</html>
