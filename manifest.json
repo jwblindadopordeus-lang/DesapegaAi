@@ -1,11 +1,19 @@
 {
-"name": "DesapegaAí",
-"short_name": "DesapegaAí",
-"description": "Compre, venda e desapegue de produtos usados.",
-"start_url": "./",
-"scope": "./",
-"display": "standalone",
-"background_color": "#ffffff",
-"theme_color": "#ff6500",
-"orientation": "portrait"
+  "name": "DesapegaAí",
+  "short_name": "DesapegaAí",
+  "description": "Compre, venda e desapegue de produtos usados.",
+  "start_url": "/DesapegaAi/",
+  "scope": "/DesapegaAi/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6500",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/DesapegaAi/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
