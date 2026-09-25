@@ -1,1541 +1,1202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>DesapegaAí</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#ff6500">
+  <title>DesapegaAí</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
+  <meta name="theme-color" content="#ff6500">
 
-body{
-  background:#f5f5f5;
-  color:#222;
-  padding-bottom:90px;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-header{
-  background:#ff6500;
-  color:white;
-  padding:25px 18px;
-  border-radius:0 0 25px 25px;
-}
+    body {
+      background: #f5f5f5;
+      color: #222;
+      padding-bottom: 90px;
+    }
 
-header h1{
-  font-size:34px;
-  margin-bottom:8px;
-}
+    header {
+      background: #ff6500;
+      color: white;
+      padding: 25px 18px;
+      border-radius: 0 0 25px 25px;
+    }
 
-header p{
-  font-size:17px;
-  margin-bottom:20px;
-}
+    header h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
 
-#pesquisa{
-  width:100%;
-  padding:16px;
-  border:0;
-  border-radius:14px;
-  font-size:16px;
-  outline:0;
-}
+    header p {
+      font-size: 17px;
+      margin-bottom: 20px;
+    }
 
-main{
-  padding:20px 16px;
-}
+    #pesquisa {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      outline: none;
+    }
 
-.titulo{
-  font-size:27px;
-  font-weight:bold;
-  margin-bottom:18px;
-}
+    main {
+      padding: 20px 16px;
+    }
 
-.tela{
-  display:none;
-}
+    .titulo {
+      font-size: 27px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
 
-.tela.ativa{
-  display:block;
-}
+    .produto {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
 
-.produto,
-.formulario,
-.caixa{
-  background:white;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:18px;
-  box-shadow:0 2px 10px rgba(0,0,0,.08);
-}
+    .foto-produto {
+      width: 100%;
+      height: 190px;
+      border-radius: 14px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 65px;
+      margin-bottom: 14px;
+    }
 
-.foto-produto{
-  width:100%;
-  height:190px;
-  border-radius:14px;
-  background:#eee;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  font-size:65px;
-  margin-bottom:14px;
-}
+    .foto-produto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.foto-produto img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    .produto h2 {
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
 
-.produto h2{
-  font-size:21px;
-  margin-bottom:8px;
-}
+    .categoria {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
 
-.categoria{
-  color:#888;
-  font-size:14px;
-  margin-bottom:10px;
-}
+    .descricao {
+      color: #666;
+      margin-bottom: 10px;
+    }
 
-.descricao{
-  color:#666;
-  margin-bottom:10px;
-}
+    .preco {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
 
-.preco{
-  font-size:24px;
-  font-weight:bold;
-  margin-bottom:14px;
-}
+    .botao {
+      width: 100%;
+      padding: 14px;
+      background: #ff6500;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.botao{
-  width:100%;
-  padding:14px;
-  background:#ff6500;
-  color:white;
-  border:0;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
+    .botao:disabled {
+      opacity: .6;
+    }
 
-.botao:disabled{
-  opacity:.6;
-}
+    .botao-secundario {
+      background: #333;
+      margin-top: 10px;
+    }
 
-.botao-secundario{
-  background:#333;
-  margin-top:10px;
-}
+    .tela {
+      display: none;
+    }
 
-input,
-textarea,
-select{
-  width:100%;
-  padding:14px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  font-size:16px;
-  outline:none;
-  margin-bottom:12px;
-}
+    .tela.ativa {
+      display: block;
+    }
 
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
+    .formulario,
+    .caixa {
+      background: white;
+      padding: 18px;
+      border-radius: 18px;
+    }
 
-label{
-  display:block;
-  font-weight:bold;
-  margin:10px 0 7px;
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 7px;
+    }
 
-.mensagem{
-  text-align:center;
-  font-weight:bold;
-  margin-top:14px;
-}
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
 
-.sucesso{
-  color:green;
-}
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
 
-.erro{
-  color:#d00000;
-}
+    .campo {
+      margin-bottom: 14px;
+    }
 
-.usuario-logado{
-  background:#fff3eb;
-  padding:16px;
-  border-radius:14px;
-  margin-bottom:15px;
-  text-align:center;
-}
+    .mensagem {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
 
-.sem-produtos{
-  background:white;
-  padding:25px;
-  border-radius:18px;
-  text-align:center;
-  color:#777;
-}
+    .sucesso {
+      color: green;
+    }
 
-#listaMensagens{
-  height:350px;
-  overflow-y:auto;
-  background:#f5f5f5;
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:12px;
-}
+    .erro {
+      color: #d00000;
+    }
 
-.mensagem-chat{
-  background:white;
-  padding:10px 12px;
-  border-radius:12px;
-  margin-bottom:8px;
-  max-width:85%;
-}
+    .usuario-logado {
+      background: #fff3eb;
+      padding: 18px;
+      border-radius: 14px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
 
-.mensagem-minha{
-  margin-left:auto;
-  background:#ff6500;
-  color:white;
-}
+    .sem-produtos {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      text-align: center;
+      color: #777;
+    }
 
-.mensagem-chat small{
-  display:block;
-  font-size:11px;
-  opacity:.7;
-  margin-top:5px;
-}
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 4px;
+      box-shadow: 0 -2px 12px rgba(0,0,0,.15);
+      z-index: 100;
+    }
 
-.chat-status{
-  text-align:center;
-  color:#777;
-  margin-bottom:10px;
-  font-size:14px;
-}
+    nav button {
+      background: transparent;
+      border: none;
+      color: #333;
+      font-size: 13px;
+      cursor: pointer;
+    }
 
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:white;
-  display:flex;
-  justify-content:space-around;
-  padding:10px 4px;
-  box-shadow:0 -2px 12px rgba(0,0,0,.15);
-  z-index:100;
-}
+    nav button span {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 3px;
+    }
 
-nav button{
-  background:transparent;
-  border:0;
-  color:#333;
-  font-size:13px;
-}
+    .chat-lista {
+      margin-bottom: 15px;
+    }
 
-nav button span{
-  display:block;
-  font-size:24px;
-  margin-bottom:3px;
-}
-</style>
+    .chat-item {
+      background: white;
+      padding: 15px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 1px solid #eee;
+    }
+
+    .chat-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .chat-area {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .chat-topo {
+      background: #ff6500;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+    }
+
+    #mensagens {
+      height: 350px;
+      overflow-y: auto;
+      padding: 15px;
+      background: #f3f3f3;
+    }
+
+    .mensagem-chat {
+      max-width: 80%;
+      padding: 10px 13px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+    }
+
+    .minha-mensagem {
+      background: #ff6500;
+      color: white;
+      margin-left: auto;
+    }
+
+    .outra-mensagem {
+      background: white;
+      color: #222;
+    }
+
+    .chat-enviar {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      background: white;
+    }
+
+    .chat-enviar input {
+      flex: 1;
+    }
+
+    .chat-enviar button {
+      width: 55px;
+      border: none;
+      border-radius: 12px;
+      background: #ff6500;
+      color: white;
+      font-size: 20px;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-<h1>DesapegaAí</h1>
-<p>Compre, venda e desapegue.</p>
+  <h1>DesapegaAí</h1>
+  <p>Compre, venda e desapegue.</p>
 
-<input
-id="pesquisa"
-type="search"
-placeholder="🔎 O que você procura?"
->
+  <input
+    id="pesquisa"
+    type="search"
+    placeholder="🔎 O que você procura?"
+  >
 </header>
 
 <main>
 
-<!-- INÍCIO -->
-<section id="inicio" class="tela ativa">
+  <!-- INÍCIO -->
+  <section id="inicio" class="tela ativa">
 
-<div class="titulo">🛍️ Produtos</div>
+    <div class="titulo">
+      🛍️ Produtos
+    </div>
 
-<div id="listaProdutos"></div>
+    <div id="listaProdutos"></div>
 
-</section>
-
-
-<!-- VENDER -->
-<section id="vender" class="tela">
-
-<div class="titulo">➕ Vender produto</div>
-
-<div class="formulario">
-
-<label>Nome do produto</label>
-<input id="nomeProduto" placeholder="Ex.: Celular usado">
-
-<label>Preço</label>
-<input id="precoProduto" type="number" step="0.01">
-
-<label>Categoria</label>
-
-<select id="categoriaProduto">
-<option>Eletrônicos</option>
-<option>Celulares</option>
-<option>Veículos</option>
-<option>Bicicletas</option>
-<option>Roupas</option>
-<option>Casa</option>
-<option>Esportes</option>
-<option>Outros</option>
-</select>
-
-<label>Descrição</label>
-
-<textarea
-id="descricaoProduto"
-placeholder="Descreva o produto..."
-></textarea>
-
-<label>Foto</label>
-
-<input
-id="fotoProduto"
-type="file"
-accept="image/*"
->
-
-<button
-class="botao"
-onclick="publicarProduto()"
->
-🚀 Publicar anúncio
-</button>
-
-</div>
-</section>
+  </section>
 
 
-<!-- CHAT -->
-<section id="chat" class="tela">
+  <!-- VENDER -->
+  <section id="vender" class="tela">
 
-<div class="titulo">💬 Chat</div>
+    <div class="titulo">
+      ➕ Vender produto
+    </div>
 
-<div class="caixa">
+    <div class="formulario">
 
-<div id="chatLoginAviso">
+      <label>Nome do produto</label>
+      <input id="nomeProduto" type="text"
+        placeholder="Ex.: Celular usado">
 
-<p>
-Entre na sua conta para conversar.
-</p>
+      <label>Preço</label>
+      <input id="precoProduto" type="number"
+        step="0.01"
+        placeholder="Ex.: 700">
 
-<br>
+      <label>Categoria</label>
 
-<button
-class="botao"
-onclick="abrirTela('perfil')"
->
-👤 Fazer login
-</button>
+      <select id="categoriaProduto">
+        <option>Eletrônicos</option>
+        <option>Celulares</option>
+        <option>Veículos</option>
+        <option>Bicicletas</option>
+        <option>Roupas</option>
+        <option>Casa</option>
+        <option>Esportes</option>
+        <option>Outros</option>
+      </select>
 
-</div>
+      <label>Descrição</label>
 
+      <textarea
+        id="descricaoProduto"
+        placeholder="Descreva o produto..."
+      ></textarea>
 
-<div id="chatArea" style="display:none">
+      <label>Foto do produto</label>
 
-<label>E-mail do usuário</label>
+      <input
+        id="fotoProduto"
+        type="file"
+        accept="image/*"
+      >
 
-<input
-id="emailDestinatario"
-type="email"
-placeholder="E-mail de quem você quer conversar"
->
+      <br><br>
 
-<button
-class="botao"
-onclick="abrirConversa()"
->
-💬 Abrir conversa
-</button>
+      <button
+        id="botaoPublicar"
+        class="botao"
+        onclick="publicarProduto()"
+      >
+        🚀 Publicar anúncio
+      </button>
 
-<br><br>
+    </div>
 
-<div
-id="chatComQuem"
-class="chat-status"
->
-Nenhuma conversa aberta.
-</div>
-
-<div id="listaMensagens"></div>
-
-<div style="display:flex;gap:8px">
-
-<input
-id="mensagemChat"
-placeholder="Digite uma mensagem..."
-style="margin:0"
->
-
-<button
-class="botao"
-onclick="enviarMensagem()"
-style="width:80px"
->
-➤
-</button>
-
-</div>
-
-</div>
-
-</div>
-</section>
+  </section>
 
 
-<!-- PERFIL -->
-<section id="perfil" class="tela">
+  <!-- CHAT -->
+  <section id="chat" class="tela">
 
-<div class="titulo">👤 Minha conta</div>
+    <div class="titulo">
+      💬 Chat
+    </div>
 
-<div id="areaPerfil" class="caixa">
+    <div id="chatLoginAviso" class="caixa">
 
-<h2>Criar conta</h2>
+      <h2>Faça login para conversar</h2>
 
-<br>
+      <br>
 
-<input
-id="nomeCadastro"
-placeholder="Seu nome"
->
+      <p>
+        Entre na sua conta para conversar com vendedores.
+      </p>
 
-<input
-id="emailCadastro"
-type="email"
-placeholder="Seu e-mail"
->
+      <br>
 
-<input
-id="senhaCadastro"
-type="password"
-placeholder="Crie uma senha"
->
+      <button
+        class="botao"
+        onclick="abrirTela('perfil')"
+      >
+        👤 Ir para minha conta
+      </button>
 
-<input
-id="confirmarSenha"
-type="password"
-placeholder="Confirme sua senha"
->
+    </div>
 
-<button
-id="botaoCadastro"
-class="botao"
-onclick="criarContaFirebase()"
->
-🚀 Criar minha conta
-</button>
+    <div id="chatConteudo" class="oculto">
 
-<br><br>
+      <div class="chat-lista">
 
-<hr>
+        <div class="caixa">
+          <h3>Suas conversas</h3>
+          <br>
+          <div id="listaConversas">
+            Nenhuma conversa ainda.
+          </div>
+        </div>
 
-<br>
+      </div>
 
-<h2>Já tenho conta</h2>
+      <div id="chatArea" class="chat-area oculto">
 
-<br>
+        <div id="chatTitulo" class="chat-topo">
+          Conversa
+        </div>
 
-<input
-id="emailLogin"
-type="email"
-placeholder="Seu e-mail"
->
+        <div id="mensagens"></div>
 
-<input
-id="senhaLogin"
-type="password"
-placeholder="Sua senha"
->
+        <div class="chat-enviar">
 
-<button
-id="botaoLogin"
-class="botao"
-onclick="entrarConta()"
->
-🔐 Entrar
-</button>
+          <input
+            id="textoMensagem"
+            type="text"
+            placeholder="Digite uma mensagem..."
+          >
 
-<p id="mensagemCadastro" class="mensagem"></p>
+          <button onclick="enviarMensagem()">
+            ➤
+          </button>
 
-</div>
-</section>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PERFIL -->
+  <section id="perfil" class="tela">
+
+    <div class="titulo">
+      👤 Minha conta
+    </div>
+
+    <div id="areaPerfil" class="caixa">
+
+      <h2>Criar conta</h2>
+
+      <br>
+
+      <input
+        id="nomeCadastro"
+        class="campo"
+        type="text"
+        placeholder="Seu nome"
+      >
+
+      <input
+        id="emailCadastro"
+        class="campo"
+        type="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        id="senhaCadastro"
+        class="campo"
+        type="password"
+        placeholder="Crie uma senha"
+      >
+
+      <input
+        id="confirmarSenha"
+        class="campo"
+        type="password"
+        placeholder="Confirme sua senha"
+      >
+
+      <button
+        id="botaoCadastro"
+        class="botao"
+        onclick="criarContaFirebase()"
+      >
+        🚀 Criar minha conta
+      </button>
+
+      <br><br>
+
+      <h3>Já possui uma conta?</h3>
+
+      <br>
+
+      <input
+        id="emailLogin"
+        class="campo"
+        type="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        id="senhaLogin"
+        class="campo"
+        type="password"
+        placeholder="Sua senha"
+      >
+
+      <button
+        id="botaoLogin"
+        class="botao botao-secundario"
+        onclick="entrarFirebase()"
+      >
+        🔐 Entrar
+      </button>
+
+      <p id="mensagemCadastro" class="mensagem"></p>
+
+    </div>
+
+  </section>
 
 </main>
 
 
+<!-- MENU -->
 <nav>
 
-<button onclick="abrirTela('inicio')">
-<span>🏠</span>
-Início
-</button>
+  <button onclick="abrirTela('inicio')">
+    <span>🏠</span>
+    Início
+  </button>
 
-<button onclick="abrirTela('chat')">
-<span>💬</span>
-Chat
-</button>
+  <button onclick="abrirTela('chat')">
+    <span>💬</span>
+    Chat
+  </button>
 
-<button onclick="abrirTela('vender')">
-<span>➕</span>
-Vender
-</button>
+  <button onclick="abrirTela('vender')">
+    <span>➕</span>
+    Vender
+  </button>
 
-<button onclick="abrirTela('perfil')">
-<span>👤</span>
-Perfil
-</button>
+  <button onclick="abrirTela('perfil')">
+    <span>👤</span>
+    Perfil
+  </button>
 
 </nav>
 
 
-<!-- FIREBASE -->
-
 <script type="module">
 
+/* =====================================================
+   FIREBASE
+===================================================== */
+
 import {
-initializeApp
+  initializeApp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-updateProfile,
-onAuthStateChanged,
-signOut
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 import {
-getFirestore,
-doc,
-setDoc,
-getDoc,
-collection,
-addDoc,
-query,
-where,
-orderBy,
-onSnapshot,
-serverTimestamp
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp,
+  where,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-/* =========================
-CONFIGURAÇÃO FIREBASE
-========================= */
+/* =====================================================
+   CONFIGURAÇÃO EXATA ENVIADA POR VOCÊ
+===================================================== */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyDhdXnJUFjPpPtfXIPO0geYBB_S0jduUM",
+  apiKey:
+    "AIzaSyDhdXnJUF3fJpPtfXIPO0geYBB_S0jduUM",
 
-authDomain:
-"desapegaai-355c2.firebaseapp.com",
+  authDomain:
+    "desapegaai-355c2.firebaseapp.com",
 
-projectId:
-"desapegaai-355c2",
+  projectId:
+    "desapegaai-355c2",
 
-storageBucket:
-"desapegaai-355c2.firebasestorage.app",
+  storageBucket:
+    "desapegaai-355c2.firebasestorage.app",
 
-messagingSenderId:
-"451568442472",
+  messagingSenderId:
+    "451568442472",
 
-appId:
-"1:451568442472:web:44f549c6fde6f0621cafdd",
+  appId:
+    "1:451568442472:web:44f549c6fde6f0621cafdd",
 
-measurementId:
-"G-DW7QQJ6VJ3"
-
+  measurementId:
+    "G-DW7QQJ6VJ3"
 };
 
 
-const app =
-initializeApp(firebaseConfig);
+/* =====================================================
+   INICIALIZAR
+===================================================== */
 
-const auth =
-getAuth(app);
+const app = initializeApp(firebaseConfig);
 
-const db =
-getFirestore(app);
+const auth = getAuth(app);
+
+const db = getFirestore(app);
 
 
-/* =========================
-VARIÁVEIS DO CHAT
-========================= */
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
 
 let usuarioAtual = null;
+
 let conversaAtual = null;
+
 let pararMensagens = null;
 
 
-/* =========================
-UTILIDADES
-========================= */
+/* =====================================================
+   FUNÇÕES DE SEGURANÇA
+===================================================== */
 
-function escapeHTML(texto){
+function escapeHTML(texto) {
 
-return String(texto || "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-CADASTRO
-========================= */
-
-window.criarContaFirebase =
-async function(){
-
-const nome =
-document
-.getElementById("nomeCadastro")
-.value
-.trim();
-
-const email =
-document
-.getElementById("emailCadastro")
-.value
-.trim();
-
-const senha =
-document
-.getElementById("senhaCadastro")
-.value;
-
-const confirmar =
-document
-.getElementById("confirmarSenha")
-.value;
-
-const mensagem =
-document
-.getElementById("mensagemCadastro");
-
-if(!nome || !email || !senha || !confirmar){
-
-mensagem.textContent =
-"Preencha todos os campos.";
-
-mensagem.className="mensagem erro";
-
-return;
+  return String(texto || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
-if(senha !== confirmar){
 
-mensagem.textContent =
-"As senhas não são iguais.";
+/* =====================================================
+   TELAS
+===================================================== */
 
-mensagem.className="mensagem erro";
+window.abrirTela = function(nome) {
 
-return;
+  document
+    .querySelectorAll(".tela")
+    .forEach(function(tela) {
 
-}
+      tela.classList.remove("ativa");
 
-if(senha.length < 6){
+    });
 
-mensagem.textContent =
-"A senha precisa ter pelo menos 6 caracteres.";
+  const tela =
+    document.getElementById(nome);
 
-mensagem.className="mensagem erro";
+  if (tela) {
+    tela.classList.add("ativa");
+  }
 
-return;
-
-}
-
-try{
-
-const resultado =
-await createUserWithEmailAndPassword(
-auth,
-email,
-senha
-);
-
-await updateProfile(
-resultado.user,
-{
-displayName:nome
-}
-);
-
-
-/* SALVAR PERFIL NO FIRESTORE */
-
-await setDoc(
-doc(db,"users",resultado.user.uid),
-{
-uid:resultado.user.uid,
-nome:nome,
-email:email,
-criadoEm:serverTimestamp()
-}
-);
-
-mensagem.textContent =
-"🎉 Conta criada com sucesso!";
-
-mensagem.className="mensagem sucesso";
-
-
-}catch(erro){
-
-console.error(erro);
-
-mensagem.textContent =
-traduzirErro(erro);
-
-mensagem.className="mensagem erro";
-
-}
+  window.scrollTo(0, 0);
 
 };
 
 
-/* =========================
-LOGIN
-========================= */
+/* =====================================================
+   PRODUTOS LOCAIS
+===================================================== */
+
+let produtos = [
+
+  {
+    nome: "Celular usado",
+    preco: 700,
+    categoria: "Celulares",
+    descricao: "Celular usado em bom estado.",
+    foto: "",
+    emoji: "📱"
+  },
+
+  {
+    nome: "Bicicleta usada",
+    preco: 450,
+    categoria: "Bicicletas",
+    descricao: "Bicicleta usada em bom estado.",
+    foto: "",
+    emoji: "🚲"
+  }
 
-window.entrarConta =
-async function(){
-
-const email =
-document
-.getElementById("emailLogin")
-.value
-.trim();
-
-const senha =
-document
-.getElementById("senhaLogin")
-.value;
-
-const mensagem =
-document
-.getElementById("mensagemCadastro");
-
-if(!email || !senha){
-
-mensagem.textContent =
-"Digite seu e-mail e senha.";
-
-mensagem.className="mensagem erro";
-
-return;
-
-}
-
-try{
-
-await signInWithEmailAndPassword(
-auth,
-email,
-senha
-);
-
-mensagem.textContent =
-"✅ Login realizado!";
-
-mensagem.className="mensagem sucesso";
-
-}catch(erro){
-
-console.error(erro);
-
-mensagem.textContent =
-traduzirErro(erro);
-
-mensagem.className="mensagem erro";
-
-}
-
-};
-
-
-/* =========================
-AUTENTICAÇÃO
-========================= */
-
-onAuthStateChanged(
-auth,
-async function(usuario){
-
-usuarioAtual=usuario;
-
-const area =
-document.getElementById("areaPerfil");
-
-const chatLogin =
-document.getElementById("chatLoginAviso");
-
-const chatArea =
-document.getElementById("chatArea");
-
-if(usuario){
-
-chatLogin.style.display="none";
-chatArea.style.display="block";
-
-area.innerHTML=`
-
-<div class="usuario-logado">
-
-<h2>
-👋 Olá, ${escapeHTML(
-usuario.displayName ||
-usuario.email
-)}!
-</h2>
-
-<br>
-
-<p>📧 ${escapeHTML(usuario.email)}</p>
-
-<br>
-
-<p>✅ Conta conectada</p>
-
-</div>
-
-<button
-class="botao"
-onclick="sairDaConta()"
->
-🚪 Sair da conta
-</button>
-
-`;
-
-}else{
-
-chatLogin.style.display="block";
-chatArea.style.display="none";
-
-}
-
-});
-
-
-/* =========================
-SAIR
-========================= */
-
-window.sairDaConta =
-async function(){
-
-try{
-
-await signOut(auth);
-
-if(pararMensagens){
-
-pararMensagens();
-
-pararMensagens=null;
-
-}
-
-conversaAtual=null;
-
-alert("Você saiu da conta.");
-
-}catch(erro){
-
-alert(
-"Não foi possível sair da conta."
-);
-
-}
-
-};
-
-
-/* =========================
-ABRIR CONVERSA
-========================= */
-
-window.abrirConversa =
-async function(){
-
-if(!usuarioAtual){
-
-alert(
-"Entre na sua conta primeiro."
-);
-
-return;
-
-}
-
-const email =
-document
-.getElementById("emailDestinatario")
-.value
-.trim()
-.toLowerCase();
-
-if(!email){
-
-alert(
-"Digite o e-mail do usuário."
-);
-
-return;
-
-}
-
-if(email === usuarioAtual.email.toLowerCase()){
-
-alert(
-"Você não pode conversar consigo mesmo."
-);
-
-return;
-
-}
-
-try{
-
-const usuariosRef =
-collection(db,"users");
-
-const q =
-query(
-usuariosRef,
-where("email","==",email)
-);
-
-const resultado =
-await new Promise(
-(resolve,reject)=>{
-
-const parar =
-onSnapshot(
-q,
-(snapshot)=>{
-
-parar();
-
-resolve(snapshot);
-
-},
-reject
-);
-
-}
-);
-
-if(resultado.empty){
-
-alert(
-"Usuário não encontrado."
-);
-
-return;
-
-}
-
-const destinatario =
-resultado.docs[0].data();
-
-const ids=[
-usuarioAtual.uid,
-destinatario.uid
-].sort();
-
-conversaAtual =
-ids[0]+"_"+ids[1];
-
-await setDoc(
-doc(
-db,
-"conversations",
-conversaAtual
-),
-{
-participants:ids,
-participantsEmails:{
-[usuarioAtual.uid]:
-usuarioAtual.email,
-[destinatario.uid]:
-destinatario.email
-},
-updatedAt:serverTimestamp()
-},
-{merge:true}
-);
-
-document.getElementById(
-"chatComQuem"
-).textContent =
-"💬 Conversando com "+
-(destinatario.nome ||
-destinatario.email);
-
-ouvirMensagens();
-
-}catch(erro){
-
-console.error(erro);
-
-alert(
-"Não foi possível abrir a conversa: "+
-erro.code
-);
-
-}
-
-};
-
-
-/* =========================
-OUVIR MENSAGENS
-========================= */
-
-function ouvirMensagens(){
-
-if(pararMensagens){
-
-pararMensagens();
-
-}
-
-const mensagensRef =
-collection(
-db,
-"conversations",
-conversaAtual,
-"messages"
-);
-
-const q =
-query(
-mensagensRef,
-orderBy("criadoEm","asc")
-);
-
-pararMensagens =
-onSnapshot(
-q,
-(snapshot)=>{
-
-const area =
-document.getElementById(
-"listaMensagens"
-);
-
-area.innerHTML="";
-
-snapshot.forEach(
-(docSnap)=>{
-
-const msg =
-docSnap.data();
-
-const div =
-document.createElement("div");
-
-div.className =
-"mensagem-chat";
-
-if(
-msg.uid ===
-usuarioAtual.uid
-){
-
-div.classList.add(
-"mensagem-minha"
-);
-
-}
-
-div.innerHTML=`
-
-${escapeHTML(msg.texto)}
-
-<small>
-${escapeHTML(msg.nome || "")}
-</small>
-
-`;
-
-area.appendChild(div);
-
-});
-
-area.scrollTop =
-area.scrollHeight;
-
-},
-(erro)=>{
-
-console.error(erro);
-
-alert(
-"Erro ao carregar mensagens: "+
-erro.code
-);
-
-}
-
-);
-
-}
-
-
-/* =========================
-ENVIAR MENSAGEM
-========================= */
-
-window.enviarMensagem =
-async function(){
-
-if(!usuarioAtual){
-
-alert(
-"Entre na sua conta."
-);
-
-return;
-
-}
-
-if(!conversaAtual){
-
-alert(
-"Abra uma conversa primeiro."
-);
-
-return;
-
-}
-
-const campo =
-document.getElementById(
-"mensagemChat"
-);
-
-const texto =
-campo.value.trim();
-
-if(!texto){
-
-return;
-
-}
-
-try{
-
-await addDoc(
-collection(
-db,
-"conversations",
-conversaAtual,
-"messages"
-),
-{
-uid:usuarioAtual.uid,
-nome:
-usuarioAtual.displayName ||
-usuarioAtual.email,
-texto:texto,
-criadoEm:serverTimestamp()
-}
-);
-
-await setDoc(
-doc(
-db,
-"conversations",
-conversaAtual
-),
-{
-updatedAt:serverTimestamp()
-},
-{merge:true}
-);
-
-campo.value="";
-
-}catch(erro){
-
-console.error(erro);
-
-alert(
-"Não foi possível enviar a mensagem: "+
-erro.code
-);
-
-}
-
-};
-
-
-/* =========================
-ERROS DO FIREBASE
-========================= */
-
-function traduzirErro(erro){
-
-switch(erro.code){
-
-case "auth/email-already-in-use":
-return "Este e-mail já possui uma conta.";
-
-case "auth/invalid-email":
-return "Digite um e-mail válido.";
-
-case "auth/weak-password":
-return "A senha precisa ter pelo menos 6 caracteres.";
-
-case "auth/invalid-credential":
-return "E-mail ou senha incorretos.";
-
-case "auth/user-not-found":
-return "Usuário não encontrado.";
-
-case "auth/wrong-password":
-return "Senha incorreta.";
-
-case "auth/operation-not-allowed":
-return "Ative E-mail/senha no Firebase Authentication.";
-
-case "auth/api-key-not-valid":
-return "A API key do Firebase está inválida.";
-
-case "permission-denied":
-return "Permissão negada pelo Firestore. Verifique as regras.";
-
-default:
-return "Erro: "+(erro.code || "desconhecido");
-
-}
-
-}
-
-</script>
-
-
-<script>
-
-/* =========================
-PRODUTOS LOCAIS
-========================= */
-
-let produtos=[
-{
-nome:"Celular usado",
-preco:700,
-categoria:"Celulares",
-descricao:"Celular usado em bom estado.",
-foto:"",
-emoji:"📱"
-},
-{
-nome:"Bicicleta usada",
-preco:450,
-categoria:"Bicicletas",
-descricao:"Bicicleta usada em bom estado.",
-foto:"",
-emoji:"🚲"
-}
 ];
 
-const salvos =
-localStorage.getItem(
-"desapegai_produtos"
-);
 
-if(salvos){
+try {
 
-try{
-produtos=JSON.parse(salvos);
-}catch(e){}
+  const salvos =
+    localStorage.getItem("desapegai_produtos");
 
-}
+  if (salvos) {
+    produtos = JSON.parse(salvos);
+  }
 
-function salvarProdutos(){
+} catch (erro) {
 
-localStorage.setItem(
-"desapegai_produtos",
-JSON.stringify(produtos)
-);
+  console.log("Erro nos produtos:", erro);
 
 }
 
-function mostrarProdutos(lista){
 
-const area =
-document.getElementById(
-"listaProdutos"
-);
+function salvarProdutos() {
 
-area.innerHTML="";
-
-if(!lista.length){
-
-area.innerHTML=`
-<div class="sem-produtos">
-<h3>Nenhum produto encontrado.</h3>
-<br>
-<p>Tente pesquisar outro produto.</p>
-</div>
-`;
-
-return;
+  localStorage.setItem(
+    "desapegai_produtos",
+    JSON.stringify(produtos)
+  );
 
 }
 
-lista.forEach(produto=>{
 
-const card =
-document.createElement("div");
+function mostrarProdutos(lista) {
 
-card.className="produto";
+  const area =
+    document.getElementById("listaProdutos");
 
-const imagem =
-produto.foto
-?
-`
-<div class="foto-produto">
-<img src="${produto.foto}">
-</div>
-`
-:
-`
-<div class="foto-produto">
-${produto.emoji || "📦"}
-</div>
-`;
+  area.innerHTML = "";
 
-card.innerHTML=`
+  if (!lista.length) {
 
-${imagem}
+    area.innerHTML = `
+      <div class="sem-produtos">
+        <h3>Nenhum produto encontrado.</h3>
+        <br>
+        <p>Tente outra pesquisa.</p>
+      </div>
+    `;
 
-<h2>
-${escapeHTMLLocal(produto.nome)}
-</h2>
+    return;
+  }
 
-<p class="categoria">
-📁 ${escapeHTMLLocal(produto.categoria)}
-</p>
 
-<p class="descricao">
-${escapeHTMLLocal(produto.descricao)}
-</p>
+  lista.forEach(function(produto) {
 
-<div class="preco">
-R$ ${Number(produto.preco)
-.toFixed(2)
-.replace(".",",")}
-</div>
+    const card =
+      document.createElement("div");
 
-<button
-class="botao"
-onclick="abrirTela('chat')"
->
-💬 Falar com vendedor
-</button>
+    card.className = "produto";
 
-`;
 
-area.appendChild(card);
+    let fotoHTML = "";
 
-});
+    if (produto.foto) {
 
-}
+      fotoHTML = `
+        <div class="foto-produto">
+          <img src="${produto.foto}" alt="Produto">
+        </div>
+      `;
 
-function escapeHTMLLocal(texto){
+    } else {
 
-return String(texto || "")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+      fotoHTML = `
+        <div class="foto-produto">
+          ${produto.emoji || "📦"}
+        </div>
+      `;
 
-}
+    }
 
-function publicarProduto(){
 
-const nome =
-document.getElementById(
-"nomeProduto"
-).value.trim();
+    const preco =
+      Number(produto.preco || 0)
+        .toFixed(2)
+        .replace(".", ",");
 
-const preco =
-document.getElementById(
-"precoProduto"
-).value;
 
-const categoria =
-document.getElementById(
-"categoriaProduto"
-).value;
+    card.innerHTML = `
 
-const descricao =
-document.getElementById(
-"descricaoProduto"
-).value.trim();
+      ${fotoHTML}
 
-const arquivo =
-document.getElementById(
-"fotoProduto"
-).files[0];
+      <h2>
+        ${escapeHTML(produto.nome)}
+      </h2>
 
-if(!nome){
+      <p class="categoria">
+        📁 ${escapeHTML(produto.categoria)}
+      </p>
 
-alert("Digite o nome do produto.");
+      <p class="descricao">
+        ${escapeHTML(produto.descricao)}
+      </p>
 
-return;
+      <div class="preco">
+        R$ ${preco}
+      </div>
+
+      <button
+        class="botao"
+        onclick="falarComVendedor()"
+      >
+        💬 Falar com vendedor
+      </button>
+
+    `;
+
+
+    area.appendChild(card);
+
+  });
 
 }
 
-if(!preco || Number(preco)<=0){
-
-alert("Digite um preço válido.");
-
-return;
-
-}
-
-function adicionar(foto){
-
-produtos.unshift({
-nome,
-preco:Number(preco),
-categoria,
-descricao,
-foto,
-emoji:"📦"
-});
-
-salvarProdutos();
-
-mostrarProdutos(produtos);
-
-document.getElementById(
-"nomeProduto"
-).value="";
-
-document.getElementById(
-"precoProduto"
-).value="";
-
-document.getElementById(
-"descricaoProduto"
-).value="";
-
-document.getElementById(
-"fotoProduto"
-).value="";
-
-alert(
-"🎉 Anúncio publicado!"
-);
-
-abrirTela("inicio");
-
-}
-
-if(arquivo){
-
-const leitor =
-new FileReader();
-
-leitor.onload =
-e=>adicionar(e.target.result);
-
-leitor.readAsDataURL(arquivo);
-
-}else{
-
-adicionar("");
-
-}
-
-}
 
 document
-.getElementById("pesquisa")
-.addEventListener(
-"input",
-function(){
+  .getElementById("pesquisa")
+  .addEventListener("input", function() {
 
-const texto =
-this.value
-.toLowerCase()
-.trim();
-
-mostrarProdutos(
-produtos.filter(p=>
-p.nome.toLowerCase().includes(texto) ||
-p.categoria.toLowerCase().includes(texto) ||
-p.descricao.toLowerCase().includes(texto)
-)
-);
-
-});
+    const texto =
+      this.value.toLowerCase().trim();
 
 
-function abrirTela(nome){
+    const resultado =
+      produtos.filter(function(produto) {
 
-document
-.querySelectorAll(".tela")
-.forEach(t=>
-t.classList.remove("ativa")
-);
+        return (
 
-const tela =
-document.getElementById(nome);
+          String(produto.nome)
+            .toLowerCase()
+            .includes(texto)
 
-if(tela){
+          ||
 
-tela.classList.add("ativa");
+          String(produto.categoria)
+            .toLowerCase()
+            .includes(texto)
+
+          ||
+
+          String(produto.descricao)
+            .toLowerCase()
+            .includes(texto)
+
+        );
+
+      });
+
+
+    mostrarProdutos(resultado);
+
+  });
+
+
+/* =====================================================
+   PUBLICAR PRODUTO
+===================================================== */
+
+window.publicarProduto = function() {
+
+  const nome =
+    document.getElementById("nomeProduto")
+      .value.trim();
+
+  const preco =
+    document.getElementById("precoProduto")
+      .value;
+
+  const categoria =
+    document.getElementById("categoriaProduto")
+      .value;
+
+  const descricao =
+    document.getElementById("descricaoProduto")
+      .value.trim();
+
+  const arquivo =
+    document.getElementById("fotoProduto")
+      .files[0];
+
+
+  if (!nome) {
+    alert("Digite o nome do produto.");
+    return;
+  }
+
+  if (!preco || Number(preco) <= 0) {
+    alert("Digite um preço válido.");
+    return;
+  }
+
+
+  if (arquivo) {
+
+    const leitor = new FileReader();
+
+    leitor.onload = function(evento) {
+
+      adicionarProduto(
+        nome,
+        preco,
+        categoria,
+        descricao,
+        evento.target.result
+      );
+
+    };
+
+    leitor.readAsDataURL(arquivo);
+
+  } else {
+
+    adicionarProduto(
+      nome,
+      preco,
+      categoria,
+      descricao,
+      ""
+    );
+
+  }
+
+};
+
+
+function adicionarProduto(
+  nome,
+  preco,
+  categoria,
+  descricao,
+  foto
+) {
+
+  produtos.unshift({
+
+    nome,
+    preco: Number(preco),
+    categoria,
+    descricao,
+    foto,
+    emoji: "📦"
+
+  });
+
+
+  salvarProdutos();
+
+  mostrarProdutos(produtos);
+
+
+  document.getElementById("nomeProduto").value = "";
+
+  document.getElementById("precoProduto").value = "";
+
+  document.getElementById("descricaoProduto").value = "";
+
+  document.getElementById("fotoProduto").value = "";
+
+
+  alert("🎉 Anúncio publicado!");
+
+  abrirTela("inicio");
 
 }
 
-window.scrollTo(0,0);
 
-}
+/* =====================================================
+   CADASTRO
+===================================================== */
 
-mostrarProdutos(produtos);
+window.criarContaFirebase = async function() {
 
-</script>
+  const nome =
+    document.getElementById("nomeCadastro")
+      .value.trim();
 
-</body>
-  </html>
+  const email =
+    document.getElementById("emailCadastro")
+      .value.trim();
+
+  const senha =
+    document.getElementById("senhaCadastro")
+      .value;
+
+  const confirmar =
+    document.getElementById("confirmarSenha")
+      .value;
+
+  const mensagem =
+    document.getElementById("mensagemCadastro");
+
+  const botao =
+    document.getElementById("botaoCadastro");
+
+
+  mensagem.textContent = "";
+
+  mensagem.className = "mensagem";
+
+
+  if (!nome || !email || !senha || !confirmar) {
+
+    mensagem.textContent =
+      "Preencha todos os campos.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  if (senha !== confirmar) {
+
+    mensagem.textContent =
+      "As senhas não são iguais.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  if (senha.length < 6) {
+
+    mensagem.textContent =
+      "A senha precisa ter pelo menos 6 caracteres.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  try {
+
+    botao.disabled = true;
+
+    botao.textContent = "Criando conta...";
+
+
+    const resultado =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+
+
+    await updateProfile(
+      resultado.user,
+      {
+        displayName: nome
+      }
+    );
+
+
+    mensagem.textContent =
+      "🎉 Conta criada com sucesso!";
+
+    mensagem.classList.add("sucesso");
+
+
+    document.getElementById("nomeCadastro").value = "";
+
+    document.getElementById("emailCadastro").value = "";
+
+    document.getElementById("senhaCadastro").value = "";
+
+    document.getElementById("confirmarSenha").value = "";
+
+
+  } catch (erro) {
+
+    console.error(erro);
+
+    mostrarErroFirebase(erro, mensagem);
+
+  }
+
+
+  botao.disabled = false;
+
+  botao.textContent =
+    "🚀 Criar minha conta";
+
+};
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+window.entrarFirebase = async function() {
+
+  const email =
+    document.getElementById("emailLogin")
+      .value.trim();
+
+  const senha =
+    document.getElementById("senhaLogin")
+      .value;
+
+  const mensagem =
+    document.getElementById("mensagemCadastro");
+
+  const botao =
+    document.getElementById("botaoLogin");
+
+
+  mensagem.textContent = "";
+
+  mensagem.className = "mensagem";
+
+
+  if (!email || !senha) {
+
+    mensagem.textContent =
+      "Digite seu e-mail e sua senha.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  try {
+
+    botao.disabled = true;
+
+    botao.textContent = "Entrando...";
+
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      senha
+    );
+
+
+    mensagem.textContent =
+      "✅ Login realizado com sucesso!";
+
+    mensagem.classList.add("sucesso");
+
+
+  } catch (erro) {
+
+    console.error(erro);
+
+    mostrarErroFirebase(erro, mensagem);
+
+  }
+
+
+  botao.disabled = false;
+
+  botao.textContent = "🔐 Entrar";
+
+};
