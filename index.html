@@ -468,7 +468,7 @@
 
     <br><br>
 
-    <button class="botao" onclick="criarConta()">
+    <button class="botao" onclickonclick="criarContaFirebase()"
       🚀 Criar minha conta
     </button>
 
@@ -678,30 +678,23 @@
 
         card.innerHTML = `
 
-          ${imagem}
-
-          <h2>
-            ${produto.nome}
-          </h2>
-
-          <p class="descricao">
-            ${produto.descricao || "Sem descrição."}
-          </p>
-
           <div class="preco">
 
-            R$
-            ${Number(produto.preco)
-              .toFixed(2)
-              .replace(".", ",")}
+  R$
+  ${Number(produto.preco)
+    .toFixed(2)
+    .replace(".", ",")}
 
-          </div>
+</div>
 
-          onclick="falarComVendedor()"
+<button
+  class="botao"
+  onclick="falarComVendedor()"
+>
 
-            💬 Falar com vendedor
+  💬 Falar com vendedor
 
-          </button>
+</button>
 
         `;
 
