@@ -1,1055 +1,1360 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DesapegaAí</title>
-<meta name="theme-color" content="#ff6500">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DesapegaAí</title><meta name="theme-color" content="#ff6500">
+<meta name="description" content="Compre, venda e desapegue de produtos usados."><link rel="manifest" href="./manifest.json"><style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f5f5;color:#222;padding-bottom:90px}
-header{background:#ff6500;color:white;padding:25px 18px;border-radius:0 0 25px 25px}
-header h1{font-size:34px;margin-bottom:8px}
-header p{font-size:17px;margin-bottom:20px}
-#pesquisa{width:100%;padding:16px;border:0;border-radius:14px;font-size:16px}
-main{padding:20px 16px}
-.titulo{font-size:27px;font-weight:bold;margin-bottom:18px}
-.tela{display:none}.tela.ativa{display:block}
-.formulario,.caixa,.produto{background:white;padding:18px;border-radius:18px;margin-bottom:18px}
-label{display:block;font-weight:bold;margin:14px 0 7px}
-input,textarea,select{width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px}
-textarea{min-height:100px}
-.botao{width:100%;padding:14px;background:#ff6500;color:white;border:0;border-radius:12px;font-size:16px;font-weight:bold;margin-top:10px}
-.botao:disabled{opacity:.6}
-.foto{width:100%;height:190px;background:#eee;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:14px;font-size:60px}
-.foto img{width:100%;height:100%;object-fit:cover}
-.preco{font-size:24px;font-weight:bold;margin:12px 0}
-.categoria{color:#888;margin:7px 0}
-.descricao{color:#666;margin:8px 0}
-.mensagem{text-align:center;font-weight:bold;margin-top:15px}
-.sucesso{color:green}.erro{color:#d00000}
-.usuario{background:#fff3eb;padding:15px;border-radius:14px;text-align:center;margin-bottom:15px}
-.conversa{background:white;padding:15px;border-radius:15px;margin-bottom:10px}
-.mensagens{height:300px;overflow-y:auto;background:#f1f1f1;padding:10px;border-radius:12px;margin:10px 0}
-.msg{padding:10px;border-radius:12px;margin:7px 0;max-width:80%}
-.minha{background:#ff6500;color:white;margin-left:auto}
-.outra{background:white}
-.vazio{text-align:center;color:#777;padding:25px}
-nav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:10px 4px;box-shadow:0 -2px 12px #0002;z-index:100}
-nav button{background:none;border:0;color:#333;font-size:13px}
-nav span{display:block;font-size:24px;margin-bottom:3px}
-</style>
-</head>
+body{
+  background:#f5f5f5;
+  color:#222;
+  padding-bottom:90px;
+}
 
-<body>
+header{
+  background:#ff6500;
+  color:white;
+  padding:25px 18px;
+  border-radius:0 0 25px 25px;
+}
 
-<header>
-<h1>DesapegaAí</h1>
-<p>Compre, venda e desapegue.</p>
-<input id="pesquisa" type="search" placeholder="🔎 O que você procura?">
-</header>
+header h1{
+  font-size:34px;
+  margin-bottom:8px;
+}
 
-<main>
+header p{
+  font-size:17px;
+  margin-bottom:20px;
+}
 
-<section id="inicio" class="tela ativa">
-<div class="titulo">🛍️ Produtos</div>
-<div id="listaProdutos"><div class="vazio">Carregando produtos...</div></div>
-</section>
+#pesquisa{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:14px;
+  font-size:16px;
+  outline:none;
+}
 
-<section id="vender" class="tela">
-<div class="titulo">➕ Vender produto</div>
+main{
+  padding:20px 16px;
+}
 
-<div class="formulario">
+.titulo{
+  font-size:27px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
 
-<label>Nome do produto</label>
-<input id="nomeProduto" placeholder="Ex.: Celular usado">
+.tela{
+  display:none;
+}
+
+.tela.ativa{
+  display:block;
+}
+
+.formulario,
+.caixa,
+.produto{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:18px;
+  box-shadow:0 2px 10px #0001;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:14px 0 7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  outline:none;
+  margin-bottom:10px;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.botao{
+  width:100%;
+  padding:14px;
+  background:#ff6500;
+  color:white;
+  border:0;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.botao:disabled{
+  opacity:.6;
+}
+
+.foto{
+  width:100%;
+  height:190px;
+  background:#eee;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  margin-bottom:14px;
+  font-size:60px;
+}
+
+.foto img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.preco{
+  font-size:24px;
+  font-weight:bold;
+  margin:12px 0;
+}
+
+.categoria{
+  color:#888;
+  margin:7px 0;
+}
+
+.descricao{
+  color:#666;
+  margin:8px 0;
+}
+
+.mensagem{
+  text-align:center;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+.sucesso{
+  color:green;
+}
+
+.erro{
+  color:#d00000;
+}
+
+.usuario{
+  background:#fff3eb;
+  padding:15px;
+  border-radius:14px;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.conversa{
+  background:white;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:10px;
+}
+
+.mensagens{
+  height:300px;
+  overflow-y:auto;
+  background:#f1f1f1;
+  padding:10px;
+  border-radius:12px;
+  margin:10px 0;
+}
+
+.msg{
+  padding:10px;
+  border-radius:12px;
+  margin:7px 0;
+  max-width:80%;
+  word-wrap:break-word;
+}
+
+.minha{
+  background:#ff6500;
+  color:white;
+  margin-left:auto;
+}
+
+.outra{
+  background:white;
+}
+
+.vazio{
+  text-align:center;
+  color:#777;
+  padding:25px;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 4px;
+  box-shadow:0 -2px 12px #0002;
+  z-index:100;
+}
+
+nav button{
+  background:none;
+  border:0;
+  color:#333;
+  font-size:13px;
+  cursor:pointer;
+}
+
+nav span{
+  display:block;
+  font-size:24px;
+  margin-bottom:3px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #ddd;
+}
+</style></head><body><header>
+  <h1>DesapegaAí</h1>
+  <p>Compre, venda e desapegue.</p><input
+id="pesquisa"
+type="search"
+placeholder="🔎 O que você procura?"
+
+«»
+
+</header><main><!-- INÍCIO --><section id="inicio" class="tela ativa">  <div class="titulo">
+    🛍️ Produtos
+  </div>  <div id="listaProdutos">
+    <div class="vazio">
+      Carregando produtos...
+    </div>
+  </div></section><!-- VENDER --><section id="vender" class="tela">  <div class="titulo">
+    ➕ Vender produto
+  </div>  <div class="formulario"><label>Nome do produto</label>
+
+<input
+  id="nomeProduto"
+  type="text"
+  placeholder="Ex.: Celular usado"
+>
 
 <label>Preço</label>
-<input id="precoProduto" type="number" step="0.01" placeholder="Ex.: 700">
+
+<input
+  id="precoProduto"
+  type="number"
+  step="0.01"
+  placeholder="Ex.: 700"
+>
 
 <label>Categoria</label>
+
 <select id="categoriaProduto">
-<option>Eletrônicos</option>
-<option>Celulares</option>
-<option>Veículos</option>
-<option>Bicicletas</option>
-<option>Roupas</option>
-<option>Casa</option>
-<option>Esportes</option>
-<option>Outros</option>
+  <option>Eletrônicos</option>
+  <option>Celulares</option>
+  <option>Veículos</option>
+  <option>Bicicletas</option>
+  <option>Roupas</option>
+  <option>Casa</option>
+  <option>Esportes</option>
+  <option>Outros</option>
 </select>
 
 <label>Descrição</label>
-<textarea id="descricaoProduto" placeholder="Descreva o produto..."></textarea>
+
+<textarea
+  id="descricaoProduto"
+  placeholder="Descreva o produto..."
+></textarea>
 
 <label>Foto</label>
-<input id="fotoProduto" type="file" accept="image/*">
 
-<button class="botao" onclick="publicarProduto()">
-🚀 Publicar anúncio
+<input
+  id="fotoProduto"
+  type="file"
+  accept="image/*"
+>
+
+<button
+  id="botaoPublicar"
+  class="botao"
+  onclick="publicarProduto()"
+>
+  🚀 Publicar anúncio
 </button>
 
-<p id="mensagemProduto" class="mensagem"></p>
+<p
+  id="mensagemProduto"
+  class="mensagem"
+></p>
+
+  </div></section><!-- CHAT --><section id="chat" class="tela">  <div class="titulo">
+    💬 Chat
+  </div>  <div id="listaConversas">
+    <div class="caixa vazio">
+      Faça login para usar o chat.
+    </div>
+  </div>  <div
+    id="areaChat"
+    style="display:none"
+  ><div class="caixa">
+
+  <h2 id="nomeChat">
+    Conversa
+  </h2>
+
+  <div
+    id="mensagens"
+    class="mensagens"
+  ></div>
+
+  <input
+    id="textoMensagem"
+    placeholder="Digite sua mensagem..."
+  >
+
+  <button
+    class="botao"
+    onclick="enviarMensagem()"
+  >
+    📨 Enviar
+  </button>
 
 </div>
-</section>
 
-<section id="chat" class="tela">
-<div class="titulo">💬 Chat</div>
+  </div></section><!-- PERFIL --><section id="perfil" class="tela">  <div class="titulo">
+    👤 Minha conta
+  </div>  <div id="areaPerfil" class="caixa"><h2>Criar conta</h2>
 
-<div id="listaConversas">
-<div class="caixa vazio">Faça login para usar o chat.</div>
-</div>
+<br>
 
-<div id="areaChat" style="display:none">
+<input
+  id="nomeCadastro"
+  type="text"
+  placeholder="Seu nome"
+>
 
-<div class="caixa">
-<h2 id="nomeChat">Conversa</h2>
+<input
+  id="emailCadastro"
+  type="email"
+  placeholder="Seu e-mail"
+>
 
-<div id="mensagens" class="mensagens"></div>
+<input
+  id="senhaCadastro"
+  type="password"
+  placeholder="Crie uma senha"
+>
 
-<input id="textoMensagem" placeholder="Digite sua mensagem...">
+<input
+  id="confirmarSenha"
+  type="password"
+  placeholder="Confirme sua senha"
+>
 
-<button class="botao" onclick="enviarMensagem()">
-📨 Enviar
+<button
+  id="botaoCadastro"
+  class="botao"
+  onclick="criarConta()"
+>
+  🚀 Criar minha conta
 </button>
 
-</div>
-
-</div>
-</section>
-
-<section id="perfil" class="tela">
-<div class="titulo">👤 Minha conta</div>
-
-<div id="areaPerfil" class="caixa">
-
-<h2>Criar conta</h2>
-
-<input id="nomeCadastro" placeholder="Seu nome">
-
-<input id="emailCadastro" type="email" placeholder="Seu e-mail">
-
-<input id="senhaCadastro" type="password" placeholder="Crie uma senha">
-
-<input id="confirmarSenha" type="password" placeholder="Confirme sua senha">
-
-<button id="botaoCadastro" class="botao" onclick="criarConta()">
-🚀 Criar minha conta
-</button>
-
-<p id="mensagemCadastro" class="mensagem"></p>
+<p
+  id="mensagemCadastro"
+  class="mensagem"
+></p>
 
 <hr style="margin:25px 0">
 
 <h2>Já possui conta?</h2>
 
-<input id="emailLogin" type="email" placeholder="Seu e-mail">
+<br>
 
-<input id="senhaLogin" type="password" placeholder="Sua senha">
+<input
+  id="emailLogin"
+  type="email"
+  placeholder="Seu e-mail"
+>
 
-<button id="botaoLogin" class="botao" onclick="entrar()">
-🔐 Entrar
+<input
+  id="senhaLogin"
+  type="password"
+  placeholder="Sua senha"
+>
+
+<button
+  id="botaoLogin"
+  class="botao"
+  onclick="entrar()"
+>
+  🔐 Entrar
 </button>
 
-<p id="mensagemLogin" class="mensagem"></p>
+<p
+  id="mensagemLogin"
+  class="mensagem"
+></p>
 
-</div>
-</section>
+  </div></section></main><!-- MENU --><nav>  <button onclick="abrirTela('inicio')">
+    <span>🏠</span>
+    Início
+  </button>  <button onclick="abrirTela('chat')">
+    <span>💬</span>
+    Chat
+  </button>  <button onclick="abrirTela('vender')">
+    <span>➕</span>
+    Vender
+  </button>  <button onclick="abrirTela('perfil')">
+    <span>👤</span>
+    Perfil
+  </button></nav><script type="module">
 
-</main>
-
-<nav>
-
-<button onclick="abrirTela('inicio')">
-<span>🏠</span>Início
-</button>
-
-<button onclick="abrirTela('chat')">
-<span>💬</span>Chat
-</button>
-
-<button onclick="abrirTela('vender')">
-<span>➕</span>Vender
-</button>
-
-<button onclick="abrirTela('perfil')">
-<span>👤</span>Perfil
-</button>
-
-</nav>
-
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+/* =====================================================
+   FIREBASE
+===================================================== */
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-updateProfile,
-onAuthStateChanged,
-signOut
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-orderBy,
-where,
-onSnapshot,
-serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+/* =====================================================
+   CONFIGURAÇÃO DO FIREBASE
+===================================================== */
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyDhdXnJUFjPpPtfXIPO0geYBB_S0jduUM",
+  apiKey:
+    "AIzaSyDhdXnJUFjPpPtfXIPO0geYBB_S0jduUM",
 
-authDomain:"desapegaai-355c2.firebaseapp.com",
+  authDomain:
+    "desapegaai-355c2.firebaseapp.com",
 
-projectId:"desapegaai-355c2",
+  projectId:
+    "desapegaai-355c2",
 
-storageBucket:"desapegaai-355c2.firebasestorage.app",
+  storageBucket:
+    "desapegaai-355c2.firebasestorage.app",
 
-messagingSenderId:"451568442472",
+  messagingSenderId:
+    "451568442472",
 
-appId:"1:451568442472:web:44f549c6fde6f0621cafdd",
+  appId:
+    "1:451568442472:web:44f549c6fde6f0621cafdd",
 
-measurementId:"G-DW7QQJ6VJ3"
+  measurementId:
+    "G-DW7QQJ6VJ3"
 
 };
 
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+/* =====================================================
+   INICIAR FIREBASE
+===================================================== */
 
-let usuarioAtual=null;
-let produtoSelecionado=null;
-let conversaAtual=null;
-let pararMensagens=null;
+let app;
+let auth;
+let db;
+
+try {
+
+  app = initializeApp(firebaseConfig);
+
+  auth = getAuth(app);
+
+  db = getFirestore(app);
+
+  console.log("Firebase iniciado.");
+
+} catch(erro) {
+
+  console.error(
+    "Erro ao iniciar Firebase:",
+    erro
+  );
+
+}
 
 
-/* =========================
-   UTILIDADE
-========================= */
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
+
+let usuarioAtual = null;
+let produtoSelecionado = null;
+let conversaAtual = null;
+let pararMensagens = null;
+
+
+/* =====================================================
+   PROTEÇÃO HTML
+===================================================== */
 
 function escapar(texto){
 
-return String(texto||"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+  return String(texto || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
-/* =========================
+/* =====================================================
    TELAS
-========================= */
+===================================================== */
 
-window.abrirTela=function(nome){
+window.abrirTela = function(nome){
 
-document.querySelectorAll(".tela").forEach(t=>{
-t.classList.remove("ativa");
-});
+  document
+    .querySelectorAll(".tela")
+    .forEach(tela => {
 
-document.getElementById(nome).classList.add("ativa");
+      tela.classList.remove("ativa");
 
-window.scrollTo(0,0);
+    });
 
-if(nome==="chat"){
-carregarConversas();
-}
+  const tela =
+    document.getElementById(nome);
+
+  if(tela){
+
+    tela.classList.add("ativa");
+
+  }
+
+  window.scrollTo(0,0);
+
+  if(nome === "chat"){
+
+    carregarConversas();
+
+  }
 
 };
 
 
-/* =========================
+/* =====================================================
    CADASTRO
-========================= */
+===================================================== */
 
-window.criarConta=async function(){
+window.criarConta = async function(){
 
-const nome=document.getElementById("nomeCadastro").value.trim();
-const email=document.getElementById("emailCadastro").value.trim();
-const senha=document.getElementById("senhaCadastro").value;
-const confirmar=document.getElementById("confirmarSenha").value;
+  const nome =
+    document
+      .getElementById("nomeCadastro")
+      .value
+      .trim();
 
-const mensagem=document.getElementById("mensagemCadastro");
-const botao=document.getElementById("botaoCadastro");
+  const email =
+    document
+      .getElementById("emailCadastro")
+      .value
+      .trim();
 
-mensagem.className="mensagem";
+  const senha =
+    document
+      .getElementById("senhaCadastro")
+      .value;
 
-if(!nome||!email||!senha||!confirmar){
+  const confirmar =
+    document
+      .getElementById("confirmarSenha")
+      .value;
 
-mensagem.textContent="Preencha todos os campos.";
-mensagem.classList.add("erro");
-return;
+  const mensagem =
+    document
+      .getElementById("mensagemCadastro");
 
-}
+  const botao =
+    document
+      .getElementById("botaoCadastro");
 
-if(senha!==confirmar){
 
-mensagem.textContent="As senhas não são iguais.";
-mensagem.classList.add("erro");
-return;
+  mensagem.textContent = "";
+  mensagem.className = "mensagem";
 
-}
 
-if(senha.length<6){
+  if(!nome || !email || !senha || !confirmar){
 
-mensagem.textContent="A senha precisa ter pelo menos 6 caracteres.";
-mensagem.classList.add("erro");
-return;
+    mensagem.textContent =
+      "Preencha todos os campos.";
 
-}
+    mensagem.classList.add("erro");
 
-try{
+    return;
 
-botao.disabled=true;
-botao.textContent="Criando conta...";
+  }
 
-const resultado=
-await createUserWithEmailAndPassword(
-auth,email,senha
-);
 
-await updateProfile(resultado.user,{
-displayName:nome
-});
+  if(senha !== confirmar){
 
-mensagem.textContent="🎉 Conta criada com sucesso!";
-mensagem.classList.add("sucesso");
+    mensagem.textContent =
+      "As senhas não são iguais.";
 
-}catch(erro){
+    mensagem.classList.add("erro");
 
-console.error(erro);
+    return;
 
-mensagem.textContent=traduzirErro(erro);
-mensagem.classList.add("erro");
+  }
 
-}
 
-botao.disabled=false;
-botao.textContent="🚀 Criar minha conta";
+  if(senha.length < 6){
+
+    mensagem.textContent =
+      "A senha precisa ter pelo menos 6 caracteres.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  if(!auth){
+
+    mensagem.textContent =
+      "Firebase não foi inicializado. Confira a configuração.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  try{
+
+    botao.disabled = true;
+
+    botao.textContent =
+      "Criando conta...";
+
+
+    const resultado =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+
+
+    await updateProfile(
+      resultado.user,
+      {
+        displayName:nome
+      }
+    );
+
+
+    mensagem.textContent =
+      "🎉 Conta criada com sucesso!";
+
+    mensagem.classList.add("sucesso");
+
+
+  }catch(erro){
+
+    console.error(
+      "Erro no cadastro:",
+      erro
+    );
+
+    mensagem.textContent =
+      traduzirErro(erro);
+
+    mensagem.classList.add("erro");
+
+
+  }finally{
+
+    botao.disabled = false;
+
+    botao.textContent =
+      "🚀 Criar minha conta";
+
+  }
 
 };
 
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+===================================================== */
 
-window.entrar=async function(){
+window.entrar = async function(){
 
-const email=document.getElementById("emailLogin").value.trim();
-const senha=document.getElementById("senhaLogin").value;
+  const email =
+    document
+      .getElementById("emailLogin")
+      .value
+      .trim();
 
-const mensagem=document.getElementById("mensagemLogin");
-const botao=document.getElementById("botaoLogin");
+  const senha =
+    document
+      .getElementById("senhaLogin")
+      .value;
 
-if(!email||!senha){
+  const mensagem =
+    document
+      .getElementById("mensagemLogin");
 
-mensagem.textContent="Digite seu e-mail e sua senha.";
-mensagem.className="mensagem erro";
-return;
+  const botao =
+    document
+      .getElementById("botaoLogin");
 
-}
 
-try{
+  mensagem.textContent = "";
+  mensagem.className = "mensagem";
 
-botao.disabled=true;
-botao.textContent="Entrando...";
 
-await signInWithEmailAndPassword(auth,email,senha);
+  if(!email || !senha){
 
-mensagem.textContent="✅ Login realizado!";
-mensagem.className="mensagem sucesso";
+    mensagem.textContent =
+      "Digite seu e-mail e sua senha.";
 
-}catch(erro){
+    mensagem.classList.add("erro");
 
-console.error(erro);
+    return;
 
-mensagem.textContent=traduzirErro(erro);
-mensagem.className="mensagem erro";
+  }
 
-}
 
-botao.disabled=false;
-botao.textContent="🔐 Entrar";
+  if(!auth){
+
+    mensagem.textContent =
+      "Firebase não foi inicializado.";
+
+    mensagem.classList.add("erro");
+
+    return;
+
+  }
+
+
+  try{
+
+    botao.disabled = true;
+
+    botao.textContent =
+      "Entrando...";
+
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      senha
+    );
+
+
+    mensagem.textContent =
+      "✅ Login realizado!";
+
+    mensagem.classList.add("sucesso");
+
+
+  }catch(erro){
+
+    console.error(
+      "Erro no login:",
+      erro
+    );
+
+    mensagem.textContent =
+      traduzirErro(erro);
+
+    mensagem.classList.add("erro");
+
+
+  }finally{
+
+    botao.disabled = false;
+
+    botao.textContent =
+      "🔐 Entrar";
+
+  }
 
 };
 
 
-/* =========================
-   ERROS
-========================= */
+/* =====================================================
+   TRADUZIR ERROS
+===================================================== */
 
 function traduzirErro(erro){
 
-const codigo=erro.code||"";
+  const codigo =
+    erro?.code || "";
 
-if(codigo.includes("invalid-api-key"))
-return "A chave do Firebase está inválida. Verifique a configuração do projeto.";
+  if(
+    codigo.includes("invalid-api-key") ||
+    codigo.includes("api-key-not-valid")
+  ){
 
-if(codigo==="auth/email-already-in-use")
-return "Este e-mail já possui uma conta.";
+    return "A chave da API do Firebase está inválida. Copie novamente a configuração do seu app no Firebase.";
 
-if(codigo==="auth/invalid-email")
-return "Digite um e-mail válido.";
+  }
 
-if(codigo==="auth/weak-password")
-return "A senha precisa ter pelo menos 6 caracteres.";
+  if(
+    codigo ===
+    "auth/email-already-in-use"
+  ){
 
-if(codigo==="auth/invalid-credential")
-return "E-mail ou senha incorretos.";
+    return "Este e-mail já possui uma conta.";
 
-if(codigo==="auth/user-not-found")
-return "Usuário não encontrado.";
+  }
 
-if(codigo==="auth/wrong-password")
-return "Senha incorreta.";
+  if(
+    codigo ===
+    "auth/invalid-email"
+  ){
 
-if(codigo==="auth/operation-not-allowed")
-return "Ative o login por e-mail e senha no Firebase.";
+    return "Digite um e-mail válido.";
 
-if(codigo==="auth/network-request-failed")
-return "Erro de internet.";
+  }
 
-return "Erro: "+codigo;
+  if(
+    codigo ===
+    "auth/weak-password"
+  ){
+
+    return "A senha precisa ter pelo menos 6 caracteres.";
+
+  }
+
+  if(
+    codigo ===
+    "auth/invalid-credential"
+  ){
+
+    return "E-mail ou senha incorretos.";
+
+  }
+
+  if(
+    codigo ===
+    "auth/user-not-found"
+  ){
+
+    return "Usuário não encontrado.";
+
+  }
+
+  if(
+    codigo ===
+    "auth/wrong-password"
+  ){
+
+    return "Senha incorreta.";
+
+  }
+
+  if(
+    codigo ===
+    "auth/operation-not-allowed"
+  ){
+
+    return "Ative o provedor E-mail/senha no Firebase Authentication.";
+
+  }
+
+  if(
+    codigo ===
+    "auth/network-request-failed"
+  ){
+
+    return "Erro de conexão com a internet.";
+
+  }
+
+  if(
+    codigo ===
+    "permission-denied"
+  ){
+
+    return "O Firebase bloqueou o acesso. Verifique as regras do Firestore.";
+
+  }
+
+  return "Erro do Firebase: " + codigo;
 
 }
 
 
-/* =========================
+/* =====================================================
    ESTADO DO LOGIN
-========================= */
+===================================================== */
 
-onAuthStateChanged(auth,usuario=>{
+if(auth){
 
-usuarioAtual=usuario;
+  onAuthStateChanged(
+    auth,
+    usuario => {
 
-const area=document.getElementById("areaPerfil");
+      usuarioAtual = usuario;
 
-if(usuario){
+      atualizarPerfil();
 
-const nome=usuario.displayName||usuario.email;
+      if(usuario){
 
-area.innerHTML=`
+        carregarProdutos();
 
-<div class="usuario">
+      }
 
-<h2>👋 Olá, ${escapar(nome)}!</h2>
-
-<p style="margin-top:10px">
-📧 ${escapar(usuario.email)}
-</p>
-
-<p style="margin-top:10px">
-✅ Conta conectada
-</p>
-
-</div>
-
-<button class="botao" onclick="sair()">
-🚪 Sair da conta
-</button>
-
-`;
-
-}else{
-
-area.innerHTML=`
-
-<h2>Criar conta</h2>
-
-<input id="nomeCadastro" placeholder="Seu nome">
-
-<input id="emailCadastro" type="email" placeholder="Seu e-mail">
-
-<input id="senhaCadastro" type="password" placeholder="Crie uma senha">
-
-<input id="confirmarSenha" type="password" placeholder="Confirme sua senha">
-
-<button id="botaoCadastro" class="botao" onclick="criarConta()">
-🚀 Criar minha conta
-</button>
-
-<p id="mensagemCadastro" class="mensagem"></p>
-
-<hr style="margin:25px 0">
-
-<h2>Já possui conta?</h2>
-
-<input id="emailLogin" type="email" placeholder="Seu e-mail">
-
-<input id="senhaLogin" type="password" placeholder="Sua senha">
-
-<button id="botaoLogin" class="botao" onclick="entrar()">
-🔐 Entrar
-</button>
-
-<p id="mensagemLogin" class="mensagem"></p>
-
-`;
+    }
+  );
 
 }
 
-carregarProdutos();
 
-});
+/* =====================================================
+   ATUALIZAR PERFIL
+===================================================== */
+
+function atualizarPerfil(){
+
+  const area =
+    document.getElementById("areaPerfil");
 
 
-/* =========================
+  if(!area){
+
+    return;
+
+  }
+
+
+  if(usuarioAtual){
+
+    const nome =
+      usuarioAtual.displayName ||
+      usuarioAtual.email ||
+      "Usuário";
+
+
+    area.innerHTML = `
+
+      <div class="usuario">
+
+        <h2>
+          👋 Olá, ${escapar(nome)}!
+        </h2>
+
+        <p style="margin-top:10px">
+          📧 ${escapar(usuarioAtual.email || "")}
+        </p>
+
+        <p style="margin-top:10px">
+          ✅ Conta conectada
+        </p>
+
+      </div>
+
+      <button
+        class="botao"
+        onclick="sair()"
+      >
+        🚪 Sair da conta
+      </button>
+
+    `;
+
+  }else{
+
+    area.innerHTML = `
+
+      <h2>Criar conta</h2>
+
+      <br>
+
+      <input
+        id="nomeCadastro"
+        type="text"
+        placeholder="Seu nome"
+      >
+
+      <input
+        id="emailCadastro"
+        type="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        id="senhaCadastro"
+        type="password"
+        placeholder="Crie uma senha"
+      >
+
+      <input
+        id="confirmarSenha"
+        type="password"
+        placeholder="Confirme sua senha"
+      >
+
+      <button
+        id="botaoCadastro"
+        class="botao"
+        onclick="criarConta()"
+      >
+        🚀 Criar minha conta
+      </button>
+
+      <p
+        id="mensagemCadastro"
+        class="mensagem"
+      ></p>
+
+      <hr style="margin:25px 0">
+
+      <h2>Já possui conta?</h2>
+
+      <br>
+
+      <input
+        id="emailLogin"
+        type="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        id="senhaLogin"
+        type="password"
+        placeholder="Sua senha"
+      >
+
+      <button
+        id="botaoLogin"
+        class="botao"
+        onclick="entrar()"
+      >
+        🔐 Entrar
+      </button>
+
+      <p
+        id="mensagemLogin"
+        class="mensagem"
+      ></p>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
    SAIR
-========================= */
+===================================================== */
 
-window.sair=async function(){
+window.sair = async function(){
 
-await signOut(auth);
+  if(!auth){
 
-abrirTela("perfil");
+    return;
+
+  }
+
+  try{
+
+    await signOut(auth);
+
+    abrirTela("perfil");
+
+  }catch(erro){
+
+    alert(
+      "Não foi possível sair da conta."
+    );
+
+  }
 
 };
 
 
-/* =========================
+/* =====================================================
    PRODUTOS
-========================= */
+===================================================== */
 
 async function carregarProdutos(){
 
-const area=document.getElementById("listaProdutos");
+  const area =
+    document.getElementById("listaProdutos");
 
-area.innerHTML='<div class="vazio">Carregando produtos...</div>';
 
-try{
+  if(!area){
 
-const consulta=query(
-collection(db,"produtos"),
-orderBy("criadoEm","desc")
-);
+    return;
 
-const resultado=await getDocs(consulta);
+  }
 
-const produtos=[];
 
-resultado.forEach(doc=>{
+  area.innerHTML =
+    '<div class="vazio">Carregando produtos...</div>';
 
-produtos.push({
-id:doc.id,
-...doc.data()
-});
 
-});
+  if(!db){
 
-mostrarProdutos(produtos);
+    area.innerHTML =
+      '<div class="vazio">Firebase não foi iniciado.</div>';
 
-}catch(erro){
+    return;
 
-console.error(erro);
+  }
 
-area.innerHTML=`
 
-<div class="vazio">
+  try{
 
-Não foi possível carregar os anúncios.
+    const consulta =
+      query(
+        collection(db,"produtos"),
+        orderBy("criadoEm","desc")
+      );
 
-<br><br>
 
-Verifique se o Firestore está ativado no Firebase.
+    const resultado =
+      await getDocs(consulta);
 
-</div>
 
-`;
+    const produtos = [];
+
+
+    resultado.forEach(doc => {
+
+      produtos.push({
+        id:doc.id,
+        ...doc.data()
+      });
+
+    });
+
+
+    mostrarProdutos(produtos);
+
+
+  }catch(erro){
+
+    console.error(
+      "Erro produtos:",
+      erro
+    );
+
+
+    /*
+      Caso o índice do Firestore ainda não exista,
+      tentamos carregar sem orderBy.
+    */
+
+    try{
+
+      const resultado =
+        await getDocs(
+          collection(db,"produtos")
+        );
+
+
+      const produtos = [];
+
+
+      resultado.forEach(doc => {
+
+        produtos.push({
+          id:doc.id,
+          ...doc.data()
+        });
+
+      });
+
+
+      produtos.sort(
+        (a,b) =>
+          (b.criadoEm?.seconds || 0) -
+          (a.criadoEm?.seconds || 0)
+      );
+
+
+      mostrarProdutos(produtos);
+
+
+    }catch(segundoErro){
+
+      console.error(
+        segundoErro
+      );
+
+
+      area.innerHTML = `
+
+        <div class="vazio">
+
+          Não foi possível carregar os anúncios.
+
+          <br><br>
+
+          Verifique se o Firestore
+          está ativado no Firebase.
+
+        </div>
+
+      `;
+
+    }
+
+  }
 
 }
 
-}
 
+/* =====================================================
+   MOSTRAR PRODUTOS
+===================================================== */
 
 function mostrarProdutos(produtos){
 
-const area=document.getElementById("listaProdutos");
-
-area.innerHTML="";
-
-if(!produtos.length){
-
-area.innerHTML=
-'<div class="vazio">Nenhum anúncio publicado ainda.</div>';
-
-return;
-
-}
-
-produtos.forEach(produto=>{
-
-const card=document.createElement("div");
-card.className="produto";
-
-let foto="📦";
-
-if(produto.foto){
-
-foto=`<img src="${produto.foto}">`;
-
-}
-
-const preco=Number(produto.preco||0)
-.toFixed(2)
-.replace(".",",");
-
-card.innerHTML=`
-
-<div class="foto">${foto}</div>
-
-<h2>${escapar(produto.nome)}</h2>
-
-<p class="categoria">
-📁 ${escapar(produto.categoria)}
-</p>
-
-<p class="descricao">
-${escapar(produto.descricao)}
-</p>
-
-<div class="preco">
-R$ ${preco}
-</div>
-
-<p style="font-size:13px;color:#888">
-Vendedor: ${escapar(produto.nomeVendedor||"Usuário")}
-</p>
-
-<button class="botao">
-💬 Falar com vendedor
-</button>
-
-`;
-
-card.querySelector("button").onclick=()=>{
-
-abrirChatProduto(produto);
-
-};
-
-area.appendChild(card);
-
-});
-
-}
+  const area =
+    document.getElementById("listaProdutos");
 
 
-/* =========================
-   PUBLICAR
-========================= */
+  area.innerHTML = "";
 
-window.publicarProduto=async function(){
 
-if(!usuarioAtual){
+  if(!produtos.length){
 
-alert("Faça login antes de publicar um anúncio.");
-abrirTela("perfil");
-return;
+    area.innerHTML =
+      '<div class="vazio">Nenhum anúncio publicado ainda.</div>';
 
-}
+    return;
 
-const nome=document.getElementById("nomeProduto").value.trim();
-const preco=document.getElementById("precoProduto").value;
-const categoria=document.getElementById("categoriaProduto").value;
-const descricao=document.getElementById("descricaoProduto").value.trim();
-const arquivo=document.getElementById("fotoProduto").files[0];
+  }
 
-const mensagem=document.getElementById("mensagemProduto");
 
-if(!nome||!preco){
+  produtos.forEach(produto => {
 
-mensagem.textContent="Preencha o nome e o preço.";
-mensagem.className="mensagem erro";
-return;
+    const card =
+      document.createElement("div");
+
+
+    card.className =
+      "produto";
+
+
+    let foto =
+      "📦";
+
+
+    if(produto.foto){
+
+      foto =
+        `<img src="${escapar(produto.foto)}" alt="Produto">`;
+
+    }
+
+
+    const preco =
+      Number(produto.preco || 0)
+        .toFixed(2)
+        .replace(".",",");
+
+
+    card.innerHTML = `
+
+      <div class="foto">
+        ${foto}
+      </div>
+
+      <h2>
+        ${escapar(produto.nome)}
+      </h2>
+
+      <p class="categoria">
+        📁 ${escapar(produto.categoria)}
+      </p>
+
+      <p class="descricao">
+        ${escapar(produto.descricao)}
+      </p>
+
+      <div class="preco">
+        R$ ${preco}
+      </div>
+
+      <p style="font-size:13px;color:#888">
+        Vendedor:
+        ${escapar(produto.nomeVendedor || "Usuário")}
+      </p>
+
+      <button class="botao">
+        💬 Falar com vendedor
+      </button>
+
+    `;
+
+
+    card
+      .querySelector("button")
+      .onclick = () => {
+
+        abrirChatProduto(produto);
+
+      };
+
+
+    area.appendChild(card);
+
+  });
 
 }
 
-let foto="";
 
-if(arquivo){
-
-if(arquivo.size>700000){
-
-mensagem.textContent="A foto deve ter menos de 700 KB.";
-mensagem.className="mensagem erro";
-return;
-
-}
-
-foto=await lerArquivo(arquivo);
-
-}
-
-try{
-
-await addDoc(collection(db,"produtos"),{
-
-nome,
-preco:Number(preco),
-categoria,
-descricao,
-foto,
-uidVendedor:usuarioAtual.uid,
-nomeVendedor:usuarioAtual.displayName||usuarioAtual.email,
-emailVendedor:usuarioAtual.email,
-criadoEm:serverTimestamp()
-
-});
-
-mensagem.textContent="🎉 Anúncio publicado!";
-mensagem.className="mensagem sucesso";
-
-document.getElementById("nomeProduto").value="";
-document.getElementById("precoProduto").value="";
-document.getElementById("descricaoProduto").value="";
-document.getElementById("fotoProduto").value="";
-
-await carregarProdutos();
-
-setTimeout(()=>{
-abrirTela("inicio");
-},800);
-
-}catch(erro){
-
-console.error(erro);
-
-mensagem.textContent="Erro ao publicar: "+erro.code;
-mensagem.className="mensagem erro";
-
-}
-
-};
-
-
-function lerArquivo(arquivo){
-
-return new Promise((resolve,reject)=>{
-
-const leitor=new FileReader();
-
-leitor.onload=()=>resolve(leitor.result);
-leitor.onerror=reject;
-
-leitor.readAsDataURL(arquivo);
-
-});
-
-}
-
-
-/* =========================
-   PESQUISA
-========================= */
-
-document.getElementById("pesquisa")
-.addEventListener("input",async function(){
-
-const texto=this.value.toLowerCase().trim();
-
-try{
-
-const resultado=await getDocs(
-collection(db,"produtos")
-);
-
-const produtos=[];
-
-resultado.forEach(doc=>{
-
-const p={id:doc.id,...doc.data()};
-
-if(
-
-p.nome.toLowerCase().includes(texto)||
-(p.categoria||"").toLowerCase().includes(texto)||
-(p.descricao||"").toLowerCase().includes(texto)
-
-){
-
-produtos.push(p);
-
-}
-
-});
-
-mostrarProdutos(produtos);
-
-}catch(erro){
-
-console.error(erro);
-
-}
-
-});
-
-
-/* =========================
-   CHAT
-========================= */
-
-async function abrirChatProduto(produto){
-
-if(!usuarioAtual){
-
-alert("Faça login para conversar com o vendedor.");
-abrirTela("perfil");
-return;
-
-}
-
-if(produto.uidVendedor===usuarioAtual.uid){
-
-alert("Este anúncio pertence a você.");
-return;
-
-}
-
-produtoSelecionado=produto;
-
-abrirTela("chat");
-
-document.getElementById("areaChat").style.display="block";
-
-document.getElementById("nomeChat").textContent=
-"💬 "+produto.nome;
-
-conversaAtual=
-usuarioAtual.uid+"_"+produto.uidVendedor+"_"+produto.id;
-
-carregarMensagens();
-
-}
-
-
-/* =========================
-   MENSAGENS
-========================= */
-
-function carregarMensagens(){
-
-const area=document.getElementById("mensagens");
-
-area.innerHTML="Carregando mensagens...";
-
-if(pararMensagens){
-pararMensagens();
-}
-
-const consulta=query(
-collection(db,"mensagens"),
-where("conversa","==",conversaAtual),
-orderBy("criadoEm","asc")
-);
-
-pararMensagens=onSnapshot(
-consulta,
-snapshot=>{
-
-area.innerHTML="";
-
-snapshot.forEach(doc=>{
-
-const msg=doc.data();
-
-const div=document.createElement("div");
-
-div.className="msg "+
-(msg.uid===usuarioAtual.uid?"minha":"outra");
-
-div.innerHTML=escapar(msg.texto);
-
-area.appendChild(div);
-
-});
-
-area.scrollTop=area.scrollHeight;
-
-},
-erro=>{
-
-console.error(erro);
-
-area.innerHTML=
-"Não foi possível carregar as mensagens.";
-
-});
-
-}
-
-
-/* =========================
-   ENVIAR MENSAGEM
-========================= */
-
-window.enviarMensagem=async function(){
-
-if(!usuarioAtual||!produtoSelecionado)
-return;
-
-const campo=document.getElementById("textoMensagem");
-
-const texto=campo.value.trim();
-
-if(!texto)
-return;
-
-try{
-
-await addDoc(collection(db,"mensagens"),{
-
-texto,
-uid:usuarioAtual.uid,
-nome:usuarioAtual.displayName||usuarioAtual.email,
-conversa:conversaAtual,
-produtoId:produtoSelecionado.id,
-uidVendedor:produtoSelecionado.uidVendedor,
-uidComprador:usuarioAtual.uid,
-criadoEm:serverTimestamp()
-
-});
-
-campo.value="";
-
-}catch(erro){
-
-console.error(erro);
-
-alert("Não foi possível enviar a mensagem: "+erro.code);
-
-}
-
-};
-
-
-/* =========================
-   CONVERSAS
-========================= */
-
-async function carregarConversas(){
-
-const area=document.getElementById("listaConversas");
-
-if(!usuarioAtual){
-
-area.innerHTML=
-'<div class="caixa vazio">Faça login para usar o chat.</div>';
-
-document.getElementById("areaChat").style.display="none";
-
-return;
-
-}
-
-area.innerHTML=
-'<div class="caixa">Carregando conversas...</div>';
-
-try{
-
-const resultado=await getDocs(
-query(
-collection(db,"mensagens"),
-where("uidComprador","==",usuarioAtual.uid)
-)
-);
-
-if(resultado.empty){
-
-area.innerHTML=`
-
-<div class="caixa vazio">
-Você ainda não possui conversas.
-<br><br>
-Entre em um anúncio e toque em
-<strong>Falar com vendedor</strong>.
-</div>
-
-`;
-
-return;
-
-}
-
-area.innerHTML="";
-
-const ids=new Set();
-
-resultado.forEach(doc=>{
-
-const m=doc.data();
-
-if(ids.has(m.conversa))
-return;
-
-ids.add(m.conversa);
-
-const div=document.createElement("div");
-
-div.className="conversa";
-
-div.innerHTML=`
-
-<strong>💬 Conversa</strong>
-
-<br><br>
-
-<button class="botao">
-Abrir conversa
-</button>
-
-`;
-
-div.querySelector("button").onclick=()=>{
-
-conversaAtual=m.conversa;
-
-produtoSelecionado={
-id:m.produtoId,
-uidVendedor:m.uidVendedor
-};
-
-document.getElementById("areaChat").style.display="block";
-
-document.getElementById("nomeChat").textContent="💬 Conversa";
-
-carregarMensagens();
-
-};
-
-area.appendChild(div);
-
-});
-
-}catch(erro){
-
-console.error(erro);
-
-area.innerHTML=
-'<div class="caixa vazio">Não foi possível carregar as conversas.</div>';
-
-}
-
-}
-
-</script>
-
-</body>
-  </html>
+/* =====================================================
+   PUBLICAR PRODUTO
+=================================================
