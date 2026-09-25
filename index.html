@@ -15,7 +15,6 @@
   >
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -97,14 +96,14 @@
       margin-bottom: 7px;
     }
 
-    .descricao {
-      color: #666;
-      margin-bottom: 10px;
-    }
-
     .categoria {
       color: #888;
       font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .descricao {
+      color: #666;
       margin-bottom: 10px;
     }
 
@@ -130,6 +129,11 @@
       transform: scale(0.98);
     }
 
+    .botao-secundario {
+      background: #333;
+      margin-top: 10px;
+    }
+
     .tela {
       display: none;
     }
@@ -138,7 +142,8 @@
       display: block;
     }
 
-    .formulario {
+    .formulario,
+    .caixa {
       background: white;
       padding: 18px;
       border-radius: 18px;
@@ -152,7 +157,8 @@
 
     .formulario input,
     .formulario textarea,
-    .formulario select {
+    .formulario select,
+    .campo-conta {
       width: 100%;
       padding: 14px;
       border: 1px solid #ddd;
@@ -166,20 +172,30 @@
       resize: vertical;
     }
 
-    .caixa {
+    .campo-conta {
+      margin-bottom: 14px;
+    }
+
+    #mensagemCadastro {
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .sem-produtos {
       background: white;
       padding: 25px;
       border-radius: 18px;
       text-align: center;
+      color: #777;
     }
 
-    .campo-conta {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-size: 16px;
-      margin-bottom: 14px;
+    .usuario-logado {
+      background: #fff3eb;
+      padding: 15px;
+      border-radius: 14px;
+      margin-bottom: 15px;
+      text-align: center;
     }
 
     nav {
@@ -209,19 +225,10 @@
       margin-bottom: 3px;
     }
 
-    .sem-produtos {
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
+    .carregando {
       text-align: center;
-      color: #777;
+      padding: 25px;
     }
-
-    #mensagemCadastro {
-      font-weight: bold;
-      color: #ff6500;
-    }
-
   </style>
 </head>
 
@@ -231,9 +238,7 @@
 
   <h1>DesapegaAí</h1>
 
-  <p>
-    Compre, venda e desapegue.
-  </p>
+  <p>Compre, venda e desapegue.</p>
 
   <input
     id="pesquisa"
@@ -289,7 +294,6 @@
       <label>Categoria</label>
 
       <select id="categoriaProduto">
-
         <option>Eletrônicos</option>
         <option>Celulares</option>
         <option>Veículos</option>
@@ -298,7 +302,6 @@
         <option>Casa</option>
         <option>Esportes</option>
         <option>Outros</option>
-
       </select>
 
       <label>Descrição</label>
@@ -316,7 +319,7 @@
         accept="image/*"
       >
 
-      <br>
+      <br><br>
 
       <button
         class="botao"
@@ -362,7 +365,7 @@
       👤 Minha conta
     </div>
 
-    <div class="caixa">
+    <div id="areaPerfil" class="caixa">
 
       <h2>Criar conta</h2>
 
@@ -403,8 +406,6 @@
         🚀 Criar minha conta
       </button>
 
-      <br><br>
-
       <p id="mensagemCadastro"></p>
 
     </div>
@@ -441,11 +442,11 @@
 </nav>
 
 
-<script>
+<!-- =========================
+     JAVASCRIPT PRINCIPAL
+========================= -->
 
-  /* =========================
-     PRODUTOS
-  ========================= */
+<script>
 
   let produtos = [
 
@@ -470,7 +471,9 @@
   ];
 
 
-  /* CARREGAR PRODUTOS */
+  /* =========================
+     CARREGAR PRODUTOS
+  ========================= */
 
   const produtosSalvos =
     localStorage.getItem("desapegai_produtos");
@@ -483,17 +486,16 @@
 
     } catch (erro) {
 
-      console.error(
-        "Erro ao carregar produtos:",
-        erro
-      );
+      console.error("Erro ao carregar produtos:", erro);
 
     }
 
   }
 
 
-  /* SALVAR PRODUTOS */
+  /* =========================
+     SALVAR PRODUTOS
+  ========================= */
 
   function salvarProdutos() {
 
@@ -523,9 +525,7 @@
 
         <div class="sem-produtos">
 
-          <h3>
-            Nenhum produto encontrado.
-          </h3>
+          <h3>Nenhum produto encontrado.</h3>
 
           <br>
 
@@ -552,7 +552,6 @@
 
       let imagem;
 
-
       if (produto.foto) {
 
         imagem = `
@@ -561,7 +560,7 @@
 
             <img
               src="${produto.foto}"
-              alt="${produto.nome}"
+              alt="Foto do produto"
             >
 
           </div>
@@ -594,15 +593,17 @@
         ${imagem}
 
         <h2>
-          ${produto.nome}
+          ${escapeHTML(produto.nome)}
         </h2>
 
         <p class="categoria">
-          📁 ${produto.categoria}
+          📁 ${escapeHTML(produto.categoria)}
         </p>
 
         <p class="descricao">
-          ${produto.descricao || "Sem descrição."}
+          ${escapeHTML(
+            produto.descricao || "Sem descrição."
+          )}
         </p>
 
         <div class="preco">
@@ -627,51 +628,64 @@
 
 
   /* =========================
+     PROTEÇÃO DE TEXTO
+  ========================= */
+
+  function escapeHTML(texto) {
+
+    return String(texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* =========================
      PESQUISA
   ========================= */
 
   document
     .getElementById("pesquisa")
-    .addEventListener(
-      "input",
-      function() {
+    .addEventListener("input", function() {
 
-        const texto =
-          this.value
-            .toLowerCase()
-            .trim();
+      const texto =
+        this.value
+          .toLowerCase()
+          .trim();
 
 
-        const resultado =
-          produtos.filter(function(produto) {
+      const resultado =
+        produtos.filter(function(produto) {
 
-            return (
+          return (
 
-              produto.nome
-                .toLowerCase()
-                .includes(texto)
+            produto.nome
+              .toLowerCase()
+              .includes(texto)
 
-              ||
+            ||
 
-              produto.categoria
-                .toLowerCase()
-                .includes(texto)
+            produto.categoria
+              .toLowerCase()
+              .includes(texto)
 
-              ||
+            ||
 
-              produto.descricao
-                .toLowerCase()
-                .includes(texto)
+            produto.descricao
+              .toLowerCase()
+              .includes(texto)
 
-            );
+          );
 
-          });
+        });
 
 
-        mostrarProdutos(resultado);
+      mostrarProdutos(resultado);
 
-      }
-    );
+    });
 
 
   /* =========================
@@ -747,9 +761,7 @@
 
     if (!nome) {
 
-      alert(
-        "Digite o nome do produto."
-      );
+      alert("Digite o nome do produto.");
 
       return;
 
@@ -758,9 +770,7 @@
 
     if (!preco || Number(preco) <= 0) {
 
-      alert(
-        "Digite um preço válido."
-      );
+      alert("Digite um preço válido.");
 
       return;
 
@@ -777,13 +787,11 @@
         function(evento) {
 
           adicionarProduto(
-
             nome,
             preco,
             categoria,
             descricao,
             evento.target.result
-
           );
 
         };
@@ -794,13 +802,11 @@
     } else {
 
       adicionarProduto(
-
         nome,
         preco,
         categoria,
         descricao,
         ""
-
       );
 
     }
@@ -839,28 +845,16 @@
 
     salvarProdutos();
 
-
     mostrarProdutos(produtos);
 
 
-    document
-      .getElementById("nomeProduto")
-      .value = "";
+    document.getElementById("nomeProduto").value = "";
 
+    document.getElementById("precoProduto").value = "";
 
-    document
-      .getElementById("precoProduto")
-      .value = "";
+    document.getElementById("descricaoProduto").value = "";
 
-
-    document
-      .getElementById("descricaoProduto")
-      .value = "";
-
-
-    document
-      .getElementById("fotoProduto")
-      .value = "";
+    document.getElementById("fotoProduto").value = "";
 
 
     alert(
@@ -897,7 +891,9 @@
 </script>
 
 
-<!-- FIREBASE -->
+<!-- =========================
+     FIREBASE AUTHENTICATION
+========================= -->
 
 <script type="module">
 
@@ -909,7 +905,9 @@
   import {
     getAuth,
     createUserWithEmailAndPassword,
-    updateProfile
+    updateProfile,
+    onAuthStateChanged,
+    signOut
   } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
@@ -946,6 +944,10 @@
   const auth =
     getAuth(app);
 
+
+  /* =========================
+     CRIAR CONTA
+  ========================= */
 
   window.criarContaFirebase =
     async function() {
@@ -1045,16 +1047,13 @@
           .getElementById("nomeCadastro")
           .value = "";
 
-
         document
           .getElementById("emailCadastro")
           .value = "";
 
-
         document
           .getElementById("senhaCadastro")
           .value = "";
-
 
         document
           .getElementById("confirmarSenha")
@@ -1074,8 +1073,9 @@
           mensagem.textContent =
             "Este e-mail já possui uma conta.";
 
+        }
 
-        } else if (
+        else if (
           erro.code ===
           "auth/invalid-email"
         ) {
@@ -1083,8 +1083,9 @@
           mensagem.textContent =
             "Digite um e-mail válido.";
 
+        }
 
-        } else if (
+        else if (
           erro.code ===
           "auth/weak-password"
         ) {
@@ -1092,11 +1093,12 @@
           mensagem.textContent =
             "A senha precisa ter pelo menos 6 caracteres.";
 
+        }
 
-        } else {
+        else {
 
           mensagem.textContent =
-            "Não foi possível criar a conta. Verifique o Firebase.";
+            "Não foi possível criar a conta. Verifique as configurações do Firebase.";
 
         }
 
@@ -1104,10 +1106,104 @@
 
     };
 
+
+  /* =========================
+     VERIFICAR LOGIN
+  ========================= */
+
+  onAuthStateChanged(auth, function(usuario) {
+
+    const area =
+      document.getElementById("areaPerfil");
+
+
+    if (usuario) {
+
+      const nome =
+        usuario.displayName ||
+        usuario.email ||
+        "Usuário";
+
+
+      area.innerHTML = `
+
+        <div class="usuario-logado">
+
+          <h2>👋 Olá, ${escapeHTMLFirebase(nome)}!</h2>
+
+          <br>
+
+          <p>
+            Sua conta está conectada.
+          </p>
+
+          <br>
+
+          <p>
+            📧 ${escapeHTMLFirebase(
+              usuario.email || ""
+            )}
+          </p>
+
+        </div>
+
+        <button
+          class="botao"
+          onclick="sairDaConta()"
+        >
+          🚪 Sair da conta
+        </button>
+
+      `;
+
+    }
+
+  });
+
+
+  /* =========================
+     SAIR
+  ========================= */
+
+  window.sairDaConta =
+    async function() {
+
+      try {
+
+        await signOut(auth);
+
+        location.reload();
+
+      } catch (erro) {
+
+        console.error(erro);
+
+        alert(
+          "Não foi possível sair da conta."
+        );
+
+      }
+
+    };
+
+
+  function escapeHTMLFirebase(texto) {
+
+    return String(texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
 </script>
 
 
-<!-- SERVICE WORKER -->
+<!-- =========================
+     SERVICE WORKER
+========================= -->
 
 <script>
 
@@ -1145,4 +1241,4 @@
 </script>
 
 </body>
-          </html>
+  </html>
