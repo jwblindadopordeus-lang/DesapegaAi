@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  
-<head>  <link rel="manifest" href="https://jwblindadopordeus-lang.github.io/DesapegaAi/manifest.json">
-<meta name="theme-color" content="#ff6500">
 
-  <!-- Configurações -->
-  
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Nome do aplicativo -->
   <title>DesapegaAí</title>
 
-  <!-- Cor do aplicativo -->
   <meta name="theme-color" content="#ff6500">
 
-  <!-- Manifesto -->
+  <link
+    rel="manifest"
+    href="https://jwblindadopordeus-lang.github.io/DesapegaAi/manifest.json"
+  >
 
-  <!-- Estilos -->
   <style>
 
     * {
@@ -32,8 +28,6 @@
       color: #222;
       padding-bottom: 90px;
     }
-
-    /* CABEÇALHO */
 
     header {
       background: #ff6500;
@@ -52,8 +46,6 @@
       margin-bottom: 20px;
     }
 
-    /* PESQUISA */
-
     #pesquisa {
       width: 100%;
       padding: 16px;
@@ -62,8 +54,6 @@
       font-size: 16px;
       outline: none;
     }
-
-    /* CONTEÚDO */
 
     main {
       padding: 20px 16px;
@@ -74,8 +64,6 @@
       font-weight: bold;
       margin-bottom: 18px;
     }
-
-    /* PRODUTO */
 
     .produto {
       background: white;
@@ -114,13 +102,17 @@
       margin-bottom: 10px;
     }
 
+    .categoria {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
     .preco {
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 14px;
     }
-
-    /* BOTÕES */
 
     .botao {
       width: 100%;
@@ -138,8 +130,6 @@
       transform: scale(0.98);
     }
 
-    /* TELAS */
-
     .tela {
       display: none;
     }
@@ -147,8 +137,6 @@
     .tela.ativa {
       display: block;
     }
-
-    /* FORMULÁRIO */
 
     .formulario {
       background: white;
@@ -178,8 +166,6 @@
       resize: vertical;
     }
 
-    /* CHAT */
-
     .caixa {
       background: white;
       padding: 25px;
@@ -187,7 +173,14 @@
       text-align: center;
     }
 
-    /* MENU INFERIOR */
+    .campo-conta {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
 
     nav {
       position: fixed;
@@ -216,8 +209,6 @@
       margin-bottom: 3px;
     }
 
-    /* SEM PRODUTOS */
-
     .sem-produtos {
       background: white;
       padding: 25px;
@@ -226,782 +217,694 @@
       color: #777;
     }
 
+    #mensagemCadastro {
+      font-weight: bold;
+      color: #ff6500;
+    }
+
   </style>
-
 </head>
-
 
 <body>
 
+<header>
 
-  <!-- ========================= -->
-  <!-- CABEÇALHO -->
-  <!-- ========================= -->
+  <h1>DesapegaAí</h1>
 
-  <header>
+  <p>
+    Compre, venda e desapegue.
+  </p>
 
-    <h1>DesapegaAí</h1>
+  <input
+    id="pesquisa"
+    type="search"
+    placeholder="🔎 O que você procura?"
+  >
 
-    <p>
-      Compre, venda e desapegue.
-    </p>
+</header>
 
-    <input
-      id="pesquisa"
-      type="search"
-      placeholder="🔎 O que você procura?"
-    >
 
-  </header>
+<main>
 
+  <!-- INÍCIO -->
 
-  <!-- ========================= -->
-  <!-- CONTEÚDO -->
-  <!-- ========================= -->
+  <section id="inicio" class="tela ativa">
 
-  <main>
+    <div class="titulo">
+      🛍️ Produtos
+    </div>
 
+    <div id="listaProdutos"></div>
 
-    <!-- INÍCIO -->
+  </section>
 
-    <section
-      id="inicio"
-      class="tela ativa"
-    >
 
-      <div class="titulo">
-        🛍️ Produtos
-      </div>
+  <!-- VENDER -->
 
-      <div id="listaProdutos"></div>
+  <section id="vender" class="tela">
 
-    </section>
+    <div class="titulo">
+      ➕ Vender produto
+    </div>
 
+    <div class="formulario">
 
-    <!-- VENDER -->
+      <label>Nome do produto</label>
 
-    <section
-      id="vender"
-      class="tela"
-    >
+      <input
+        id="nomeProduto"
+        type="text"
+        placeholder="Ex.: Celular usado"
+      >
 
-      <div class="titulo">
-        ➕ Vender produto
-      </div>
+      <label>Preço</label>
 
-      <div class="formulario">
+      <input
+        id="precoProduto"
+        type="number"
+        step="0.01"
+        placeholder="Ex.: 700"
+      >
 
-        <label>
-          Nome do produto
-        </label>
+      <label>Categoria</label>
 
-        <input
-          id="nomeProduto"
-          type="text"
-          placeholder="Ex.: Celular usado"
-        >
+      <select id="categoriaProduto">
 
+        <option>Eletrônicos</option>
+        <option>Celulares</option>
+        <option>Veículos</option>
+        <option>Bicicletas</option>
+        <option>Roupas</option>
+        <option>Casa</option>
+        <option>Esportes</option>
+        <option>Outros</option>
 
-        <label>
-          Preço
-        </label>
+      </select>
 
-        <input
-          id="precoProduto"
-          type="number"
-          placeholder="Ex.: 700"
-        >
+      <label>Descrição</label>
 
+      <textarea
+        id="descricaoProduto"
+        placeholder="Descreva o produto..."
+      ></textarea>
 
-        <label>
-          Categoria
-        </label>
+      <label>Foto do produto</label>
 
-        <select id="categoriaProduto">
-
-          <option>
-            Eletrônicos
-          </option>
-
-          <option>
-            Celulares
-          </option>
-
-          <option>
-            Veículos
-          </option>
-
-          <option>
-            Bicicletas
-          </option>
-
-          <option>
-            Roupas
-          </option>
-
-          <option>
-            Casa
-          </option>
-
-          <option>
-            Esportes
-          </option>
-
-          <option>
-            Outros
-          </option>
-
-        </select>
-
-
-        <label>
-          Descrição
-        </label>
-
-        <textarea
-          id="descricaoProduto"
-          placeholder="Descreva o produto..."
-        ></textarea>
-
-
-        <label>
-          Foto do produto
-        </label>
-
-        <input
-          id="fotoProduto"
-          type="file"
-          accept="image/*"
-        >
-
-
-        <br>
-        <br>
-
-        <button
-          class="botao"
-          onclick="publicarProduto()"
-        >
-          🚀 Publicar anúncio
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- CHAT -->
-
-    <section
-      id="chat"
-      class="tela"
-    >
-
-      <div class="titulo">
-        💬 Chat
-      </div>
-
-      <div class="caixa">
-
-        <h2>
-          Suas conversas
-        </h2>
-
-        <br>
-
-        <p>
-          Quando você conversar com um vendedor,
-          a conversa aparecerá aqui.
-        </p>
-
-      </div>
-
-    </section>
-
-<!-- PERFIL -->
-
-<section id="perfil" class="tela">
-
-  <div class="titulo">
-    👤 Minha conta
-  </div>
-
-  <div class="caixa" id="areaCadastro">
-
-    <h2>Criar conta</h2>
-
-    <br>
-
-    <input
-      id="nomeCadastro"
-      type="text"
-      placeholder="Seu nome"
-      style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px;"
-    >
-
-    <br><br>
-
-    <input
-      id="emailCadastro"
-      type="email"
-      placeholder="Seu e-mail"
-      style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px;"
-    >
-
-    <br><br>
-
-    <input
-      id="senhaCadastro"
-      type="password"
-      placeholder="Crie uma senha"
-      style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px;"
-    >
-
-    <br><br>
-
-    <input
-      id="confirmarSenha"
-      type="password"
-      placeholder="Confirme sua senha"
-      style="width:100%;padding:14px;border:1px solid #ddd;border-radius:12px;font-size:16px;"
-    >
-
-    <br><br>
-
-<button class="botao" onclick="criarContaFirebase()">
-  🚀 Criar minha conta
-</button>
-
-    <br><br>
-
-    <p id="mensagemCadastro"></p>
-
-  </div>
-
-</section>
-  <!-- ========================= -->
-  <!-- MENU -->
-  <!-- ========================= -->
-
-  <nav>
-
-    <button onclick="abrirTela('inicio')">
-
-      <span>
-        🏠
-      </span>
-
-      Início
-
-    </button>
-
-
-    <button onclick="abrirTela('chat')">
-
-      <span>
-        💬
-      </span>
-
-      Chat
-
-    </button>
-
-
-    <button onclick="abrirTela('vender')">
-
-      <span>
-        ➕
-      </span>
-
-      Vender
-
-    </button>
-
-
-    <button onclick="abrirTela('perfil')">
-
-      <span>
-        👤
-      </span>
-
-      Perfil
-
-    </button>
-
-  </nav>
-
-
-  <!-- ========================= -->
-  <!-- JAVASCRIPT -->
-  <!-- ========================= -->
-
-  <script>
-
-    /*
-      PRODUTOS INICIAIS
-    */
-
-    let produtos = [
-
-      {
-        nome: "Celular usado",
-        preco: 700,
-        categoria: "Celulares",
-        descricao: "Celular usado em bom estado.",
-        foto: "",
-        emoji: "📱"
-      },
-
-      {
-        nome: "Bicicleta usada",
-        preco: 450,
-        categoria: "Bicicletas",
-        descricao: "Bicicleta usada em bom estado.",
-        foto: "",
-        emoji: "🚲"
-      }
-
-    ];
-
-
-    /*
-      CARREGAR PRODUTOS SALVOS
-    */
-
-    const produtosSalvos =
-      localStorage.getItem("desapegai_produtos");
-
-
-    if (produtosSalvos) {
-
-      produtos =
-        JSON.parse(produtosSalvos);
-
-    }
-
-
-    /*
-      SALVAR PRODUTOS
-    */
-
-    function salvarProdutos() {
-
-      localStorage.setItem(
-        "desapegai_produtos",
-        JSON.stringify(produtos)
-      );
-
-    }
-
-
-/*
-  MOSTRAR PRODUTOS
-*/
-
-function mostrarProdutos(lista) {
-
-  const area = document.getElementById("listaProdutos");
-
-  area.innerHTML = "";
-
-  if (lista.length === 0) {
-
-    area.innerHTML = `
-      <div class="sem-produtos">
-
-        <h3>
-          Nenhum produto encontrado.
-        </h3>
-
-        <br>
-
-        <p>
-          Tente pesquisar outro produto.
-        </p>
-
-      </div>
-    `;
-
-    return;
-  }
-
-  lista.forEach(function(produto) {
-
-    const card = document.createElement("div");
-
-    card.className = "produto";
-
-    let imagem;
-
-    if (produto.foto) {
-
-      imagem = `
-        <div class="foto-produto">
-
-          <img
-            src="${produto.foto}"
-            alt="${produto.nome}"
-          >
-
-        </div>
-      `;
-
-    } else {
-
-      imagem = `
-        <div class="foto-produto">
-
-          ${produto.emoji || "📦"}
-
-        </div>
-      `;
-
-    }
-
-    card.innerHTML = `
-
-      ${imagem}
-
-      <h2>
-        ${produto.nome}
-      </h2>
-
-      <p class="descricao">
-        ${produto.descricao || "Sem descrição."}
-      </p>
-
-      <p>
-        Categoria: ${produto.categoria}
-      </p>
+      <input
+        id="fotoProduto"
+        type="file"
+        accept="image/*"
+      >
 
       <br>
 
-      <div class="preco">
+      <button
+        class="botao"
+        onclick="publicarProduto()"
+      >
+        🚀 Publicar anúncio
+      </button>
 
-        R$
-        ${Number(produto.preco)
-          .toFixed(2)
-          .replace(".", ",")}
+    </div>
 
-      </div>
+  </section>
+
+
+  <!-- CHAT -->
+
+  <section id="chat" class="tela">
+
+    <div class="titulo">
+      💬 Chat
+    </div>
+
+    <div class="caixa">
+
+      <h2>Suas conversas</h2>
+
+      <br>
+
+      <p>
+        Quando você conversar com um vendedor,
+        a conversa aparecerá aqui.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- PERFIL -->
+
+  <section id="perfil" class="tela">
+
+    <div class="titulo">
+      👤 Minha conta
+    </div>
+
+    <div class="caixa">
+
+      <h2>Criar conta</h2>
+
+      <br>
+
+      <input
+        id="nomeCadastro"
+        class="campo-conta"
+        type="text"
+        placeholder="Seu nome"
+      >
+
+      <input
+        id="emailCadastro"
+        class="campo-conta"
+        type="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        id="senhaCadastro"
+        class="campo-conta"
+        type="password"
+        placeholder="Crie uma senha"
+      >
+
+      <input
+        id="confirmarSenha"
+        class="campo-conta"
+        type="password"
+        placeholder="Confirme sua senha"
+      >
 
       <button
         class="botao"
-        onclick="falarComVendedor()"
+        onclick="criarContaFirebase()"
       >
-
-        💬 Falar com vendedor
-
+        🚀 Criar minha conta
       </button>
 
-    `;
+      <br><br>
 
-    area.appendChild(card);
+      <p id="mensagemCadastro"></p>
 
-  });
+    </div>
 
-}
-    /*
-      PESQUISAR
-    */
+  </section>
 
-    document
-      .getElementById("pesquisa")
-      .addEventListener(
-        "input",
-        function() {
-
-          const texto =
-            this.value.toLowerCase();
+</main>
 
 
-          const resultado =
-            produtos.filter(function(produto) {
+<!-- MENU -->
 
-              return (
+<nav>
 
-                produto.nome
-                  .toLowerCase()
-                  .includes(texto)
+  <button onclick="abrirTela('inicio')">
+    <span>🏠</span>
+    Início
+  </button>
 
-                ||
+  <button onclick="abrirTela('chat')">
+    <span>💬</span>
+    Chat
+  </button>
 
-                produto.categoria
-                  .toLowerCase()
-                  .includes(texto)
+  <button onclick="abrirTela('vender')">
+    <span>➕</span>
+    Vender
+  </button>
 
-                ||
+  <button onclick="abrirTela('perfil')">
+    <span>👤</span>
+    Perfil
+  </button>
 
-                produto.descricao
-                  .toLowerCase()
-                  .includes(texto)
-
-              );
-
-            });
-
-
-          mostrarProdutos(resultado);
-
-        }
-      );
+</nav>
 
 
-    /*
-      ABRIR TELAS
-    */
+<script>
 
-    function abrirTela(nome) {
+  /* =========================
+     PRODUTOS
+  ========================= */
+
+  let produtos = [
+
+    {
+      nome: "Celular usado",
+      preco: 700,
+      categoria: "Celulares",
+      descricao: "Celular usado em bom estado.",
+      foto: "",
+      emoji: "📱"
+    },
+
+    {
+      nome: "Bicicleta usada",
+      preco: 450,
+      categoria: "Bicicletas",
+      descricao: "Bicicleta usada em bom estado.",
+      foto: "",
+      emoji: "🚲"
+    }
+
+  ];
 
 
-      const telas =
-        document.querySelectorAll(".tela");
+  /* CARREGAR PRODUTOS */
 
+  const produtosSalvos =
+    localStorage.getItem("desapegai_produtos");
 
-      telas.forEach(function(tela) {
+  if (produtosSalvos) {
 
-        tela.classList.remove("ativa");
+    try {
 
-      });
+      produtos = JSON.parse(produtosSalvos);
 
+    } catch (erro) {
 
-      document
-        .getElementById(nome)
-        .classList.add("ativa");
-
-
-      window.scrollTo(
-        0,
-        0
+      console.error(
+        "Erro ao carregar produtos:",
+        erro
       );
 
     }
 
-
-    /*
-      PUBLICAR PRODUTO
-    */
-
-    function publicarProduto() {
+  }
 
 
-      const nome =
-        document
-          .getElementById("nomeProduto")
-          .value
-          .trim();
+  /* SALVAR PRODUTOS */
+
+  function salvarProdutos() {
+
+    localStorage.setItem(
+      "desapegai_produtos",
+      JSON.stringify(produtos)
+    );
+
+  }
 
 
-      const preco =
-        document
-          .getElementById("precoProduto")
-          .value;
+  /* =========================
+     MOSTRAR PRODUTOS
+  ========================= */
+
+  function mostrarProdutos(lista) {
+
+    const area =
+      document.getElementById("listaProdutos");
+
+    area.innerHTML = "";
 
 
-      const categoria =
-        document
-          .getElementById("categoriaProduto")
-          .value;
+    if (lista.length === 0) {
+
+      area.innerHTML = `
+
+        <div class="sem-produtos">
+
+          <h3>
+            Nenhum produto encontrado.
+          </h3>
+
+          <br>
+
+          <p>
+            Tente pesquisar outro produto.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
 
 
-      const descricao =
-        document
-          .getElementById("descricaoProduto")
-          .value
-          .trim();
+    lista.forEach(function(produto) {
+
+      const card =
+        document.createElement("div");
+
+      card.className = "produto";
 
 
-      const arquivo =
-        document
-          .getElementById("fotoProduto")
-          .files[0];
+      let imagem;
 
 
-      if (!nome) {
+      if (produto.foto) {
 
-        alert(
-          "Digite o nome do produto."
-        );
+        imagem = `
 
-        return;
+          <div class="foto-produto">
 
-      }
+            <img
+              src="${produto.foto}"
+              alt="${produto.nome}"
+            >
 
+          </div>
 
-      if (!preco) {
-
-        alert(
-          "Digite o preço."
-        );
-
-        return;
-
-      }
-
-
-      /*
-        SE TIVER FOTO
-      */
-
-      if (arquivo) {
-
-
-        const leitor =
-          new FileReader();
-
-
-        leitor.onload =
-          function(evento) {
-
-
-            adicionarProduto(
-
-              nome,
-
-              preco,
-
-              categoria,
-
-              descricao,
-
-              evento.target.result
-
-            );
-
-          };
-
-
-        leitor.readAsDataURL(
-          arquivo
-        );
-
+        `;
 
       } else {
 
+        imagem = `
 
-        adicionarProduto(
+          <div class="foto-produto">
 
-          nome,
+            ${produto.emoji || "📦"}
 
-          preco,
+          </div>
 
-          categoria,
-
-          descricao,
-
-          ""
-
-        );
+        `;
 
       }
 
-    }
+
+      const preco =
+        Number(produto.preco)
+          .toFixed(2)
+          .replace(".", ",");
 
 
-    /*
-      ADICIONAR PRODUTO
-    */
+      card.innerHTML = `
 
-    function adicionarProduto(
+        ${imagem}
 
-      nome,
-      preco,
-      categoria,
-      descricao,
-      foto
+        <h2>
+          ${produto.nome}
+        </h2>
 
-    ) {
+        <p class="categoria">
+          📁 ${produto.categoria}
+        </p>
 
+        <p class="descricao">
+          ${produto.descricao || "Sem descrição."}
+        </p>
 
-      produtos.unshift({
+        <div class="preco">
+          R$ ${preco}
+        </div>
 
-        nome: nome,
+        <button
+          class="botao"
+          onclick="falarComVendedor()"
+        >
+          💬 Falar com vendedor
+        </button>
 
-        preco: Number(preco),
-
-        categoria: categoria,
-
-        descricao: descricao,
-
-        foto: foto,
-
-        emoji: "📦"
-
-      });
+      `;
 
 
-      salvarProdutos();
+      area.appendChild(card);
+
+    });
+
+  }
 
 
-      mostrarProdutos(
-        produtos
-      );
+  /* =========================
+     PESQUISA
+  ========================= */
+
+  document
+    .getElementById("pesquisa")
+    .addEventListener(
+      "input",
+      function() {
+
+        const texto =
+          this.value
+            .toLowerCase()
+            .trim();
 
 
-      document
-        .getElementById("nomeProduto")
-        .value = "";
+        const resultado =
+          produtos.filter(function(produto) {
+
+            return (
+
+              produto.nome
+                .toLowerCase()
+                .includes(texto)
+
+              ||
+
+              produto.categoria
+                .toLowerCase()
+                .includes(texto)
+
+              ||
+
+              produto.descricao
+                .toLowerCase()
+                .includes(texto)
+
+            );
+
+          });
 
 
-      document
-        .getElementById("precoProduto")
-        .value = "";
+        mostrarProdutos(resultado);
 
-
-      document
-        .getElementById("descricaoProduto")
-        .value = "";
-
-
-      document
-        .getElementById("fotoProduto")
-        .value = "";
-
-
-      alert(
-        "🎉 Anúncio publicado com sucesso!"
-      );
-
-
-      abrirTela(
-        "inicio"
-      );
-
-    }
-
-
-    /*
-      CHAT
-    */
-
-    function falarComVendedor() {
-
-      abrirTela(
-        "chat"
-      );
-
-      alert(
-        "O sistema de mensagens será conectado na próxima etapa."
-      );
-
-    }
-
-
-    /*
-      INICIAR APLICATIVO
-    */
-
-    mostrarProdutos(
-      produtos
+      }
     );
 
-  </script>
-</body>
+
+  /* =========================
+     ABRIR TELAS
+  ========================= */
+
+  function abrirTela(nome) {
+
+    const telas =
+      document.querySelectorAll(".tela");
+
+
+    telas.forEach(function(tela) {
+
+      tela.classList.remove("ativa");
+
+    });
+
+
+    const tela =
+      document.getElementById(nome);
+
+
+    if (tela) {
+
+      tela.classList.add("ativa");
+
+    }
+
+
+    window.scrollTo(0, 0);
+
+  }
+
+
+  /* =========================
+     PUBLICAR PRODUTO
+  ========================= */
+
+  function publicarProduto() {
+
+    const nome =
+      document
+        .getElementById("nomeProduto")
+        .value
+        .trim();
+
+
+    const preco =
+      document
+        .getElementById("precoProduto")
+        .value;
+
+
+    const categoria =
+      document
+        .getElementById("categoriaProduto")
+        .value;
+
+
+    const descricao =
+      document
+        .getElementById("descricaoProduto")
+        .value
+        .trim();
+
+
+    const arquivo =
+      document
+        .getElementById("fotoProduto")
+        .files[0];
+
+
+    if (!nome) {
+
+      alert(
+        "Digite o nome do produto."
+      );
+
+      return;
+
+    }
+
+
+    if (!preco || Number(preco) <= 0) {
+
+      alert(
+        "Digite um preço válido."
+      );
+
+      return;
+
+    }
+
+
+    if (arquivo) {
+
+      const leitor =
+        new FileReader();
+
+
+      leitor.onload =
+        function(evento) {
+
+          adicionarProduto(
+
+            nome,
+            preco,
+            categoria,
+            descricao,
+            evento.target.result
+
+          );
+
+        };
+
+
+      leitor.readAsDataURL(arquivo);
+
+    } else {
+
+      adicionarProduto(
+
+        nome,
+        preco,
+        categoria,
+        descricao,
+        ""
+
+      );
+
+    }
+
+  }
+
+
+  /* =========================
+     ADICIONAR PRODUTO
+  ========================= */
+
+  function adicionarProduto(
+    nome,
+    preco,
+    categoria,
+    descricao,
+    foto
+  ) {
+
+    produtos.unshift({
+
+      nome: nome,
+
+      preco: Number(preco),
+
+      categoria: categoria,
+
+      descricao: descricao,
+
+      foto: foto,
+
+      emoji: "📦"
+
+    });
+
+
+    salvarProdutos();
+
+
+    mostrarProdutos(produtos);
+
+
+    document
+      .getElementById("nomeProduto")
+      .value = "";
+
+
+    document
+      .getElementById("precoProduto")
+      .value = "";
+
+
+    document
+      .getElementById("descricaoProduto")
+      .value = "";
+
+
+    document
+      .getElementById("fotoProduto")
+      .value = "";
+
+
+    alert(
+      "🎉 Anúncio publicado com sucesso!"
+    );
+
+
+    abrirTela("inicio");
+
+  }
+
+
+  /* =========================
+     CHAT
+  ========================= */
+
+  function falarComVendedor() {
+
+    abrirTela("chat");
+
+    alert(
+      "O sistema de mensagens será conectado na próxima etapa."
+    );
+
+  }
+
+
+  /* =========================
+     INICIAR
+  ========================= */
+
+  mostrarProdutos(produtos);
+
+</script>
+
 
 <!-- FIREBASE -->
+
 <script type="module">
 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
   import {
     getAuth,
@@ -1012,149 +915,194 @@ function mostrarProdutos(lista) {
 
   const firebaseConfig = {
 
-    apiKey: "AIzaSyDhdXnJUF3fJpPtfXIPO0geYBB_S0jduUM",
+    apiKey:
+      "AIzaSyDhdXnJUFjPpPtfXIPO0geYBB_S0jduUM",
 
-    authDomain: "desapegaai-355c2.firebaseapp.com",
+    authDomain:
+      "desapegaai-355c2.firebaseapp.com",
 
-    projectId: "desapegaai-355c2",
+    projectId:
+      "desapegaai-355c2",
 
-    storageBucket: "desapegaai-355c2.firebasestorage.app",
+    storageBucket:
+      "desapegaai-355c2.firebasestorage.app",
 
-    messagingSenderId: "451568442472",
+    messagingSenderId:
+      "451568442472",
 
-    appId: "1:451568442472:web:c473b443ee3f4bdd1cafdd",
+    appId:
+      "1:451568442472:web:c473b443ee3f4bdd1cafdd",
 
-    measurementId: "G-J6NS8J3SZW"
+    measurementId:
+      "G-J6NS8J3SZW"
 
   };
 
 
-  const app = initializeApp(firebaseConfig);
-
-  const auth = getAuth(app);
-
-
-  window.criarContaFirebase = async function () {
-
-    const nome =
-      document.getElementById("nomeCadastro").value.trim();
-
-    const email =
-      document.getElementById("emailCadastro").value.trim();
-
-    const senha =
-      document.getElementById("senhaCadastro").value;
-
-    const confirmar =
-      document.getElementById("confirmarSenha").value;
-
-    const mensagem =
-      document.getElementById("mensagemCadastro");
+  const app =
+    initializeApp(firebaseConfig);
 
 
-    mensagem.textContent = "";
+  const auth =
+    getAuth(app);
 
 
-    if (!nome || !email || !senha || !confirmar) {
+  window.criarContaFirebase =
+    async function() {
 
-      mensagem.textContent =
-        "Preencha todos os campos.";
-
-      return;
-
-    }
-
-
-    if (senha !== confirmar) {
-
-      mensagem.textContent =
-        "As senhas não são iguais.";
-
-      return;
-
-    }
+      const nome =
+        document
+          .getElementById("nomeCadastro")
+          .value
+          .trim();
 
 
-    if (senha.length < 6) {
-
-      mensagem.textContent =
-        "A senha precisa ter pelo menos 6 caracteres.";
-
-      return;
-
-    }
+      const email =
+        document
+          .getElementById("emailCadastro")
+          .value
+          .trim();
 
 
-    try {
-
-      const resultado =
-        await createUserWithEmailAndPassword(
-          auth,
-          email,
-          senha
-        );
+      const senha =
+        document
+          .getElementById("senhaCadastro")
+          .value;
 
 
-      await updateProfile(
-        resultado.user,
-        {
-          displayName: nome
-        }
-      );
+      const confirmar =
+        document
+          .getElementById("confirmarSenha")
+          .value;
 
 
-      mensagem.textContent =
-        "🎉 Conta criada com sucesso!";
+      const mensagem =
+        document
+          .getElementById("mensagemCadastro");
 
 
-      document.getElementById("nomeCadastro").value = "";
-
-      document.getElementById("emailCadastro").value = "";
-
-      document.getElementById("senhaCadastro").value = "";
-
-      document.getElementById("confirmarSenha").value = "";
-
-
-    } catch (erro) {
-
-      console.error(erro);
+      mensagem.textContent = "";
 
 
       if (
-        erro.code ===
-        "auth/email-already-in-use"
+        !nome ||
+        !email ||
+        !senha ||
+        !confirmar
       ) {
 
         mensagem.textContent =
-          "Este e-mail já possui uma conta.";
+          "Preencha todos os campos.";
 
-      } else if (
-        erro.code ===
-        "auth/invalid-email"
-      ) {
+        return;
+
+      }
+
+
+      if (senha !== confirmar) {
 
         mensagem.textContent =
-          "Digite um e-mail válido.";
+          "As senhas não são iguais.";
 
-      } else if (
-        erro.code ===
-        "auth/weak-password"
-      ) {
+        return;
+
+      }
+
+
+      if (senha.length < 6) {
 
         mensagem.textContent =
           "A senha precisa ter pelo menos 6 caracteres.";
 
-      } else {
-
-        mensagem.textContent =
-          "Não foi possível criar a conta. Verifique o Firebase.";
+        return;
 
       }
 
-    }
 
-  };
+      try {
+
+        const resultado =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            senha
+          );
+
+
+        await updateProfile(
+          resultado.user,
+          {
+            displayName: nome
+          }
+        );
+
+
+        mensagem.textContent =
+          "🎉 Conta criada com sucesso!";
+
+
+        document
+          .getElementById("nomeCadastro")
+          .value = "";
+
+
+        document
+          .getElementById("emailCadastro")
+          .value = "";
+
+
+        document
+          .getElementById("senhaCadastro")
+          .value = "";
+
+
+        document
+          .getElementById("confirmarSenha")
+          .value = "";
+
+
+      } catch (erro) {
+
+        console.error(erro);
+
+
+        if (
+          erro.code ===
+          "auth/email-already-in-use"
+        ) {
+
+          mensagem.textContent =
+            "Este e-mail já possui uma conta.";
+
+
+        } else if (
+          erro.code ===
+          "auth/invalid-email"
+        ) {
+
+          mensagem.textContent =
+            "Digite um e-mail válido.";
+
+
+        } else if (
+          erro.code ===
+          "auth/weak-password"
+        ) {
+
+          mensagem.textContent =
+            "A senha precisa ter pelo menos 6 caracteres.";
+
+
+        } else {
+
+          mensagem.textContent =
+            "Não foi possível criar a conta. Verifique o Firebase.";
+
+        }
+
+      }
+
+    };
 
 </script>
 
@@ -1163,36 +1111,38 @@ function mostrarProdutos(lista) {
 
 <script>
 
-if ("serviceWorker" in navigator) {
+  if ("serviceWorker" in navigator) {
 
-  window.addEventListener("load", function () {
+    window.addEventListener(
+      "load",
+      function() {
 
-    navigator.serviceWorker.register(
-      "./service-worker.js"
-    )
+        navigator.serviceWorker
+          .register("./service-worker.js")
 
-    .then(function () {
+          .then(function() {
 
-      console.log(
-        "Service Worker registrado!"
-      );
+            console.log(
+              "Service Worker registrado!"
+            );
 
-    })
+          })
 
-    .catch(function (error) {
+          .catch(function(error) {
 
-      console.log(
-        "Erro no Service Worker:",
-        error
-      );
+            console.log(
+              "Erro no Service Worker:",
+              error
+            );
 
-    });
+          });
 
-  });
+      }
+    );
 
-}
+  }
 
 </script>
 
-
-</html>
+</body>
+          </html>
