@@ -1,9 +1,20 @@
-<!DOCTYPE html><html lang="pt-BR"><head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>DesapegaAí</title>  <meta name="theme-color" content="#ff6500">  <link
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DesapegaAí</title>
+
+  <meta name="theme-color" content="#ff6500">
+
+  <link
     rel="manifest"
     href="https://jwblindadopordeus-lang.github.io/DesapegaAi/manifest.json"
-  >  <style>
+  >
+
+  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -187,6 +198,19 @@
       text-align: center;
     }
 
+    .sucesso {
+      color: green;
+    }
+
+    .erro {
+      color: #d00000;
+    }
+
+    .carregando {
+      text-align: center;
+      padding: 25px;
+    }
+
     nav {
       position: fixed;
       bottom: 0;
@@ -213,164 +237,230 @@
       font-size: 24px;
       margin-bottom: 3px;
     }
-  </style></head><body><header>  <h1>DesapegaAí</h1>  <p>Compre, venda e desapegue.</p><input
-id="pesquisa"
-type="search"
-placeholder="🔎 O que você procura?"
+  </style>
+</head>
 
-«»
+<body>
 
-</header><main>  <!-- INÍCIO -->  <section id="inicio" class="tela ativa"><div class="titulo">
-  🛍️ Produtos
-</div>
+<header>
 
-<div id="listaProdutos"></div>
+  <h1>DesapegaAí</h1>
 
-  </section>  <!-- VENDER -->  <section id="vender" class="tela"><div class="titulo">
-  ➕ Vender produto
-</div>
-
-<div class="formulario">
-
-  <label>Nome do produto</label>
+  <p>Compre, venda e desapegue.</p>
 
   <input
-    id="nomeProduto"
-    type="text"
-    placeholder="Ex.: Celular usado"
+    id="pesquisa"
+    type="search"
+    placeholder="🔎 O que você procura?"
   >
 
-  <label>Preço</label>
+</header>
 
-  <input
-    id="precoProduto"
-    type="number"
-    step="0.01"
-    placeholder="Ex.: 700"
-  >
 
-  <label>Categoria</label>
+<main>
 
-  <select id="categoriaProduto">
-    <option>Eletrônicos</option>
-    <option>Celulares</option>
-    <option>Veículos</option>
-    <option>Bicicletas</option>
-    <option>Roupas</option>
-    <option>Casa</option>
-    <option>Esportes</option>
-    <option>Outros</option>
-  </select>
+  <!-- INÍCIO -->
 
-  <label>Descrição</label>
+  <section id="inicio" class="tela ativa">
 
-  <textarea
-    id="descricaoProduto"
-    placeholder="Descreva o produto..."
-  ></textarea>
+    <div class="titulo">
+      🛍️ Produtos
+    </div>
 
-  <label>Foto do produto</label>
+    <div id="listaProdutos"></div>
 
-  <input
-    id="fotoProduto"
-    type="file"
-    accept="image/*"
-  >
+  </section>
 
-  <br><br>
 
-  <button
-    class="botao"
-    onclick="publicarProduto()"
-  >
-    🚀 Publicar anúncio
-  </button>
+  <!-- VENDER -->
 
-</div>
+  <section id="vender" class="tela">
 
-  </section>  <!-- CHAT -->  <section id="chat" class="tela"><div class="titulo">
-  💬 Chat
-</div>
+    <div class="titulo">
+      ➕ Vender produto
+    </div>
 
-<div class="caixa">
+    <div class="formulario">
 
-  <h2>Suas conversas</h2>
+      <label>Nome do produto</label>
 
-  <br>
+      <input
+        id="nomeProduto"
+        type="text"
+        placeholder="Ex.: Celular usado"
+      >
 
-  <p>
-    Quando você conversar com um vendedor,
-    a conversa aparecerá aqui.
-  </p>
+      <label>Preço</label>
 
-</div>
+      <input
+        id="precoProduto"
+        type="number"
+        step="0.01"
+        placeholder="Ex.: 700"
+      >
 
-  </section>  <!-- PERFIL -->  <section id="perfil" class="tela"><div class="titulo">
-  👤 Minha conta
-</div>
+      <label>Categoria</label>
 
-<div id="areaPerfil" class="caixa">
+      <select id="categoriaProduto">
 
-  <h2>Criar conta</h2>
+        <option>Eletrônicos</option>
+        <option>Celulares</option>
+        <option>Veículos</option>
+        <option>Bicicletas</option>
+        <option>Roupas</option>
+        <option>Casa</option>
+        <option>Esportes</option>
+        <option>Outros</option>
 
-  <br>
+      </select>
 
-  <input
-    id="nomeCadastro"
-    class="campo-conta"
-    type="text"
-    placeholder="Seu nome"
-  >
+      <label>Descrição</label>
 
-  <input
-    id="emailCadastro"
-    class="campo-conta"
-    type="email"
-    placeholder="Seu e-mail"
-  >
+      <textarea
+        id="descricaoProduto"
+        placeholder="Descreva o produto..."
+      ></textarea>
 
-  <input
-    id="senhaCadastro"
-    class="campo-conta"
-    type="password"
-    placeholder="Crie uma senha"
-  >
+      <label>Foto do produto</label>
 
-  <input
-    id="confirmarSenha"
-    class="campo-conta"
-    type="password"
-    placeholder="Confirme sua senha"
-  >
+      <input
+        id="fotoProduto"
+        type="file"
+        accept="image/*"
+      >
 
-  <button
-    class="botao"
-    onclick="criarContaFirebase()"
-  >
-    🚀 Criar minha conta
-  </button>
+      <br><br>
 
-  <p id="mensagemCadastro"></p>
+      <button
+        class="botao"
+        onclick="publicarProduto()"
+      >
+        🚀 Publicar anúncio
+      </button>
 
-</div>
+    </div>
 
-  </section></main><!-- MENU --><nav>  <button onclick="abrirTela('inicio')">
+  </section>
+
+
+  <!-- CHAT -->
+
+  <section id="chat" class="tela">
+
+    <div class="titulo">
+      💬 Chat
+    </div>
+
+    <div class="caixa">
+
+      <h2>Suas conversas</h2>
+
+      <br>
+
+      <p>
+        Quando você conversar com um vendedor,
+        a conversa aparecerá aqui.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- PERFIL -->
+
+  <section id="perfil" class="tela">
+
+    <div class="titulo">
+      👤 Minha conta
+    </div>
+
+    <div id="areaPerfil" class="caixa">
+
+      <h2>Criar conta</h2>
+
+      <br>
+
+      <input
+        id="nomeCadastro"
+        class="campo-conta"
+        type="text"
+        placeholder="Seu nome"
+      >
+
+      <input
+        id="emailCadastro"
+        class="campo-conta"
+        type="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        id="senhaCadastro"
+        class="campo-conta"
+        type="password"
+        placeholder="Crie uma senha"
+      >
+
+      <input
+        id="confirmarSenha"
+        class="campo-conta"
+        type="password"
+        placeholder="Confirme sua senha"
+      >
+
+      <button
+        id="botaoCadastro"
+        class="botao"
+        onclick="criarContaFirebase()"
+      >
+        🚀 Criar minha conta
+      </button>
+
+      <p id="mensagemCadastro"></p>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- MENU -->
+
+<nav>
+
+  <button onclick="abrirTela('inicio')">
     <span>🏠</span>
     Início
-  </button>  <button onclick="abrirTela('chat')">
+  </button>
+
+  <button onclick="abrirTela('chat')">
     <span>💬</span>
     Chat
-  </button>  <button onclick="abrirTela('vender')">
+  </button>
+
+  <button onclick="abrirTela('vender')">
     <span>➕</span>
     Vender
-  </button>  <button onclick="abrirTela('perfil')">
+  </button>
+
+  <button onclick="abrirTela('perfil')">
     <span>👤</span>
     Perfil
-  </button></nav><!-- =========================
+  </button>
+
+</nav>
+
+
+<!-- =========================
      JAVASCRIPT PRINCIPAL
-========================= --><script>
+========================= -->
+
+<script>
 
   let produtos = [
+
     {
       nome: "Celular usado",
       preco: 700,
@@ -379,6 +469,7 @@ placeholder="🔎 O que você procura?"
       foto: "",
       emoji: "📱"
     },
+
     {
       nome: "Bicicleta usada",
       preco: 450,
@@ -387,8 +478,11 @@ placeholder="🔎 O que você procura?"
       foto: "",
       emoji: "🚲"
     }
+
   ];
 
+
+  /* CARREGAR PRODUTOS */
 
   const produtosSalvos =
     localStorage.getItem("desapegai_produtos");
@@ -396,13 +490,22 @@ placeholder="🔎 O que você procura?"
   if (produtosSalvos) {
 
     try {
+
       produtos = JSON.parse(produtosSalvos);
+
     } catch (erro) {
-      console.error("Erro ao carregar produtos:", erro);
+
+      console.error(
+        "Erro ao carregar produtos:",
+        erro
+      );
+
     }
 
   }
 
+
+  /* SALVAR PRODUTOS */
 
   function salvarProdutos() {
 
@@ -413,6 +516,8 @@ placeholder="🔎 O que você procura?"
 
   }
 
+
+  /* PROTEÇÃO DE TEXTO */
 
   function escapeHTML(texto) {
 
@@ -425,6 +530,8 @@ placeholder="🔎 O que você procura?"
 
   }
 
+
+  /* MOSTRAR PRODUTOS */
 
   function mostrarProdutos(lista) {
 
@@ -487,7 +594,9 @@ placeholder="🔎 O que você procura?"
         imagem = `
 
           <div class="foto-produto">
+
             ${produto.emoji || "📦"}
+
           </div>
 
         `;
@@ -532,13 +641,14 @@ placeholder="🔎 O que você procura?"
 
       `;
 
-
       area.appendChild(card);
 
     });
 
   }
 
+
+  /* PESQUISA */
 
   document
     .getElementById("pesquisa")
@@ -554,6 +664,7 @@ placeholder="🔎 O que você procura?"
         produtos.filter(function(produto) {
 
           return (
+
             produto.nome
               .toLowerCase()
               .includes(texto)
@@ -569,6 +680,7 @@ placeholder="🔎 O que você procura?"
             produto.descricao
               .toLowerCase()
               .includes(texto)
+
           );
 
         });
@@ -579,6 +691,8 @@ placeholder="🔎 O que você procura?"
     });
 
 
+  /* ABRIR TELAS */
+
   function abrirTela(nome) {
 
     const telas =
@@ -586,7 +700,9 @@ placeholder="🔎 O que você procura?"
 
 
     telas.forEach(function(tela) {
+
       tela.classList.remove("ativa");
+
     });
 
 
@@ -595,7 +711,9 @@ placeholder="🔎 O que você procura?"
 
 
     if (tela) {
+
       tela.classList.add("ativa");
+
     }
 
 
@@ -603,6 +721,8 @@ placeholder="🔎 O que você procura?"
 
   }
 
+
+  /* PUBLICAR PRODUTO */
 
   function publicarProduto() {
 
@@ -641,6 +761,7 @@ placeholder="🔎 O que você procura?"
     if (!nome) {
 
       alert("Digite o nome do produto.");
+
       return;
 
     }
@@ -649,6 +770,7 @@ placeholder="🔎 O que você procura?"
     if (!preco || Number(preco) <= 0) {
 
       alert("Digite um preço válido.");
+
       return;
 
     }
@@ -656,20 +778,22 @@ placeholder="🔎 O que você procura?"
 
     if (arquivo) {
 
-      const leitor = new FileReader();
+      const leitor =
+        new FileReader();
 
 
-      leitor.onload = function(evento) {
+      leitor.onload =
+        function(evento) {
 
-        adicionarProduto(
-          nome,
-          preco,
-          categoria,
-          descricao,
-          evento.target.result
-        );
+          adicionarProduto(
+            nome,
+            preco,
+            categoria,
+            descricao,
+            evento.target.result
+          );
 
-      };
+        };
 
 
       leitor.readAsDataURL(arquivo);
@@ -689,6 +813,8 @@ placeholder="🔎 O que você procura?"
   }
 
 
+  /* ADICIONAR PRODUTO */
+
   function adicionarProduto(
     nome,
     preco,
@@ -700,10 +826,15 @@ placeholder="🔎 O que você procura?"
     produtos.unshift({
 
       nome: nome,
+
       preco: Number(preco),
+
       categoria: categoria,
+
       descricao: descricao,
+
       foto: foto,
+
       emoji: "📦"
 
     });
@@ -715,17 +846,25 @@ placeholder="🔎 O que você procura?"
 
 
     document.getElementById("nomeProduto").value = "";
+
     document.getElementById("precoProduto").value = "";
+
     document.getElementById("descricaoProduto").value = "";
+
     document.getElementById("fotoProduto").value = "";
 
 
-    alert("🎉 Anúncio publicado com sucesso!");
+    alert(
+      "🎉 Anúncio publicado com sucesso!"
+    );
+
 
     abrirTela("inicio");
 
   }
 
+
+  /* CHAT */
 
   function falarComVendedor() {
 
@@ -740,14 +879,18 @@ placeholder="🔎 O que você procura?"
 
   mostrarProdutos(produtos);
 
-</script><!-- =========================
+</script>
+
+
+<!-- =========================
      FIREBASE AUTHENTICATION
-========================= --><script type="module">
+========================= -->
+
+<script type="module">
 
   import {
     initializeApp
   } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
 
   import {
     getAuth,
@@ -758,9 +901,7 @@ placeholder="🔎 O que você procura?"
   } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-  /*
-    CONFIGURAÇÃO CORRETA DO SEU FIREBASE
-  */
+  /* CONFIGURAÇÃO DO SEU FIREBASE */
 
   const firebaseConfig = {
 
@@ -788,9 +929,7 @@ placeholder="🔎 O que você procura?"
   };
 
 
-  /*
-    INICIAR FIREBASE
-  */
+  /* INICIALIZAR FIREBASE */
 
   const app =
     initializeApp(firebaseConfig);
@@ -800,9 +939,9 @@ placeholder="🔎 O que você procura?"
     getAuth(app);
 
 
-  /*
-    CRIAR CONTA
-  */
+  /* =========================
+     CRIAR CONTA
+  ========================= */
 
   window.criarContaFirebase =
     async function() {
@@ -838,7 +977,14 @@ placeholder="🔎 O que você procura?"
           .getElementById("mensagemCadastro");
 
 
+      const botao =
+        document
+          .getElementById("botaoCadastro");
+
+
       mensagem.textContent = "";
+
+      mensagem.className = "";
 
 
       if (
@@ -851,6 +997,8 @@ placeholder="🔎 O que você procura?"
         mensagem.textContent =
           "Preencha todos os campos.";
 
+        mensagem.className = "erro";
+
         return;
 
       }
@@ -860,6 +1008,8 @@ placeholder="🔎 O que você procura?"
 
         mensagem.textContent =
           "As senhas não são iguais.";
+
+        mensagem.className = "erro";
 
         return;
 
@@ -871,6 +1021,8 @@ placeholder="🔎 O que você procura?"
         mensagem.textContent =
           "A senha precisa ter pelo menos 6 caracteres.";
 
+        mensagem.className = "erro";
+
         return;
 
       }
@@ -878,8 +1030,10 @@ placeholder="🔎 O que você procura?"
 
       try {
 
-        mensagem.textContent =
-          "Criando sua conta...";
+        botao.disabled = true;
+
+        botao.textContent =
+          "Criando conta...";
 
 
         const resultado =
@@ -901,21 +1055,20 @@ placeholder="🔎 O que você procura?"
         mensagem.textContent =
           "🎉 Conta criada com sucesso!";
 
+        mensagem.className = "sucesso";
+
 
         document
           .getElementById("nomeCadastro")
           .value = "";
 
-
         document
           .getElementById("emailCadastro")
           .value = "";
 
-
         document
           .getElementById("senhaCadastro")
           .value = "";
-
 
         document
           .getElementById("confirmarSenha")
@@ -925,20 +1078,8 @@ placeholder="🔎 O que você procura?"
       } catch (erro) {
 
         console.error(
-          "ERRO FIREBASE:",
+          "Firebase:",
           erro
-        );
-
-
-        console.error(
-          "CÓDIGO:",
-          erro.code
-        );
-
-
-        console.error(
-          "MENSAGEM:",
-          erro.message
         );
 
 
@@ -978,46 +1119,45 @@ placeholder="🔎 O que você procura?"
         ) {
 
           mensagem.textContent =
-            "Ative o login por e-mail e senha no Firebase Authentication.";
+            "O login por e-mail ainda não está ativado no Firebase.";
 
         }
 
         else if (
           erro.code ===
-          "auth/unauthorized-domain"
+          "auth/network-request-failed"
         ) {
 
           mensagem.textContent =
-            "Este domínio não está autorizado no Firebase.";
-
-        }
-
-        else if (
-          erro.code ===
-          "auth/invalid-api-key"
-        ) {
-
-          mensagem.textContent =
-            "A chave do Firebase está incorreta.";
+            "Erro de conexão. Verifique sua internet.";
 
         }
 
         else {
 
           mensagem.textContent =
-            "Erro Firebase: " +
+            "Erro do Firebase: " +
             (erro.code || "desconhecido");
 
         }
 
+
+        mensagem.className = "erro";
+
       }
+
+
+      botao.disabled = false;
+
+      botao.textContent =
+        "🚀 Criar minha conta";
 
     };
 
 
-  /*
-    VERIFICAR USUÁRIO LOGADO
-  */
+  /* =========================
+     VERIFICAR USUÁRIO
+  ========================= */
 
   onAuthStateChanged(
     auth,
@@ -1080,9 +1220,9 @@ placeholder="🔎 O que você procura?"
   );
 
 
-  /*
-    SAIR DA CONTA
-  */
+  /* =========================
+     SAIR DA CONTA
+  ========================= */
 
   window.sairDaConta =
     async function() {
@@ -1095,11 +1235,7 @@ placeholder="🔎 O que você procura?"
 
       } catch (erro) {
 
-        console.error(
-          "Erro ao sair:",
-          erro
-        );
-
+        console.error(erro);
 
         alert(
           "Não foi possível sair da conta."
@@ -1110,9 +1246,7 @@ placeholder="🔎 O que você procura?"
     };
 
 
-  /*
-    PROTEÇÃO DE TEXTO
-  */
+  /* PROTEÇÃO DE TEXTO DO FIREBASE */
 
   function escapeHTMLFirebase(texto) {
 
@@ -1125,9 +1259,14 @@ placeholder="🔎 O que você procura?"
 
   }
 
-</script><!-- =========================
+</script>
+
+
+<!-- =========================
      SERVICE WORKER
-========================= --><script>
+========================= -->
+
+<script>
 
   if ("serviceWorker" in navigator) {
 
@@ -1160,4 +1299,7 @@ placeholder="🔎 O que você procura?"
 
   }
 
-</script></body></html>
+</script>
+
+</body>
+  </html>
