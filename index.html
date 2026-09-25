@@ -468,9 +468,9 @@
 
     <br><br>
 
-    <button class="botao" onclickonclick="criarContaFirebase()"
-      🚀 Criar minha conta
-    </button>
+<button class="botao" onclick="criarContaFirebase()">
+  🚀 Criar minha conta
+</button>
 
     <br><br>
 
@@ -609,23 +609,27 @@
 
       if (lista.length === 0) {
 
-        area.innerHTML = `
+        card.innerHTML = `
+  ${imagem}
 
-          <div class="sem-produtos">
+  <h2>${produto.nome}</h2>
 
-            <h3>
-              Nenhum produto encontrado.
-            </h3>
+  <p class="descricao">
+    ${produto.descricao || "Sem descrição."}
+  </p>
 
-            <br>
+  <div class="preco">
+    R$
+    ${Number(produto.preco).toFixed(2).replace(".", ",")}
+  </div>
 
-            <p>
-              Tente pesquisar outro produto.
-            </p>
-
-          </div>
-
-        `;
+  <button
+    class="botao"
+    onclick="falarComVendedor()"
+  >
+    💬 Falar com vendedor
+  </button>
+`;
 
         return;
 
