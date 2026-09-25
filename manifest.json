@@ -1,21 +1,11 @@
-<link rel="manifest" href="./manifest.json">
 {
-  "short_name": "MDN",
-  "name": "MDN Web Docs",
-  "icons": [
-    {
-      "src": "/favicon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "start_url": ".",
+  "name": "DesapegaAí",
+  "short_name": "DesapegaAí",
+  "description": "Compre, venda e desapegue de produtos usados.",
+  "start_url": "/DesapegaAi/",
+  "scope": "/DesapegaAi/",
   "display": "standalone",
-  "theme_color": "black",
-  "background_color": "white"
+  "background_color": "#ffffff",
+  "theme_color": "#ff6500",
+  "orientation": "portrait"
 }
