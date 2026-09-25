@@ -594,48 +594,113 @@
     }
 
 
-    /*
-      MOSTRAR PRODUTOS
-    function mostrarProdutos(lista) {
+/*
+  MOSTRAR PRODUTOS
+*/
 
-      const area =
-        document.getElementById("listaProdutos");
+function mostrarProdutos(lista) {
 
+  const area = document.getElementById("listaProdutos");
 
-      
+  area.innerHTML = "";
 
+  if (lista.length === 0) {
 
-      if (lista.length === 0) {
-        card.innerHTML = `
+    area.innerHTML = `
+      <div class="sem-produtos">
 
-          <div class="preco">
+        <h3>
+          Nenhum produto encontrado.
+        </h3>
 
-  R$
-  ${Number(produto.preco)
-    .toFixed(2)
-    .replace(".", ",")}
+        <br>
 
-</div>
+        <p>
+          Tente pesquisar outro produto.
+        </p>
 
-<button
-  class="botao"
-  onclick="falarComVendedor()"
->
+      </div>
+    `;
 
-  💬 Falar com vendedor
+    return;
+  }
 
-</button>
+  lista.forEach(function(produto) {
 
-        `;
+    const card = document.createElement("div");
 
+    card.className = "produto";
 
-        area.appendChild(card);
+    let imagem;
 
-      });
+    if (produto.foto) {
+
+      imagem = `
+        <div class="foto-produto">
+
+          <img
+            src="${produto.foto}"
+            alt="${produto.nome}"
+          >
+
+        </div>
+      `;
+
+    } else {
+
+      imagem = `
+        <div class="foto-produto">
+
+          ${produto.emoji || "📦"}
+
+        </div>
+      `;
 
     }
 
+    card.innerHTML = `
 
+      ${imagem}
+
+      <h2>
+        ${produto.nome}
+      </h2>
+
+      <p class="descricao">
+        ${produto.descricao || "Sem descrição."}
+      </p>
+
+      <p>
+        Categoria: ${produto.categoria}
+      </p>
+
+      <br>
+
+      <div class="preco">
+
+        R$
+        ${Number(produto.preco)
+          .toFixed(2)
+          .replace(".", ",")}
+
+      </div>
+
+      <button
+        class="botao"
+        onclick="falarComVendedor()"
+      >
+
+        💬 Falar com vendedor
+
+      </button>
+
+    `;
+
+    area.appendChild(card);
+
+  });
+
+}
     /*
       PESQUISAR
     */
