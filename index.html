@@ -1025,6 +1025,137 @@ if ("serviceWorker" in navigator) {
       });
   });
 }
-</script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhdXnJUF3fJpPtfXIPO0geYBB_S0jduUM",
+    authDomain: "desapegaai-355c2.firebaseapp.com",
+    projectId: "desapegaai-355c2",
+    storageBucket: "desapegaai-355c2.firebasestorage.app",
+    messagingSenderId: "451568442472",
+    appId: "1:451568442472:web:c473b443ee3f4bdd1cafdd",
+    measurementId: "G-J6NS8J3SZW"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.criarContaFirebase = async function () {
+    const nome = document.getElementById("nomeCadastro").value.trim();
+    const email = document.getElementById("emailCadastro").value.trim();
+    const senha = document.getElementById("senhaCadastro").value;
+    const confirmar = document.getElementById("confirmarSenha").value;
+    const mensagem = document.getElementById("mensagemCadastro");
+
+    if (!nome || !email || !senha || !confirmar) {
+      mensagem.textContent = "Preencha todos os campos.";
+      return;
+    }
+
+    if (senha !== confirmar) {
+      mensagem.textContent = "As senhas não são iguais.";
+      return;
+    }
+
+    if (senha.length < 6) {
+      mensagem.textContent = "A senha precisa ter pelo menos 6 caracteres.";
+      return;
+    }
+
+    try {
+      const resultado = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+
+      await updateProfile(resultado.user, {
+        displayName: nome
+      });
+
+      mensagem.textContent = "🎉 Conta criada com sucesso!";
+    } catch (erro) {
+      if (erro.code === "auth/email-already-in-use") {
+        mensagem.textContent = "Este e-mail já possui uma conta.";
+      } else if (erro.code === "auth/invalid-email") {
+        mensagem.textContent = "Digite um e-mail válido.";
+      } else {
+        mensagem.textContent = "Não foi possível criar a conta.";
+        console.error(erro);
+      }
+    }
+  };
+</script><script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhdXnJUF3fJpPtfXIPO0geYBB_S0jduUM",
+    authDomain: "desapegaai-355c2.firebaseapp.com",
+    projectId: "desapegaai-355c2",
+    storageBucket: "desapegaai-355c2.firebasestorage.app",
+    messagingSenderId: "451568442472",
+    appId: "1:451568442472:web:c473b443ee3f4bdd1cafdd",
+    measurementId: "G-J6NS8J3SZW"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.criarContaFirebase = async function () {
+    const nome = document.getElementById("nomeCadastro").value.trim();
+    const email = document.getElementById("emailCadastro").value.trim();
+    const senha = document.getElementById("senhaCadastro").value;
+    const confirmar = document.getElementById("confirmarSenha").value;
+    const mensagem = document.getElementById("mensagemCadastro");
+
+    if (!nome || !email || !senha || !confirmar) {
+      mensagem.textContent = "Preencha todos os campos.";
+      return;
+    }
+
+    if (senha !== confirmar) {
+      mensagem.textContent = "As senhas não são iguais.";
+      return;
+    }
+
+    if (senha.length < 6) {
+      mensagem.textContent = "A senha precisa ter pelo menos 6 caracteres.";
+      return;
+    }
+
+    try {
+      const resultado = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+
+      await updateProfile(resultado.user, {
+        displayName: nome
+      });
+
+      mensagem.textContent = "🎉 Conta criada com sucesso!";
+    } catch (erro) {
+      if (erro.code === "auth/email-already-in-use") {
+        mensagem.textContent = "Este e-mail já possui uma conta.";
+      } else if (erro.code === "auth/invalid-email") {
+        mensagem.textContent = "Digite um e-mail válido.";
+      } else {
+        mensagem.textContent = "Não foi possível criar a conta.";
+        console.error(erro);
+      }
+    }
+  };
 
        </html>
