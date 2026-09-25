@@ -596,8 +596,6 @@
 
     /*
       MOSTRAR PRODUTOS
-    */
-
     function mostrarProdutos(lista) {
 
       const area =
@@ -608,75 +606,6 @@
 
 
       if (lista.length === 0) {
-
-        card.innerHTML = `
-  ${imagem}
-
-  <h2>${produto.nome}</h2>
-
-  <p class="descricao">
-    ${produto.descricao || "Sem descrição."}
-  </p>
-
-  <div class="preco">
-    R$
-    ${Number(produto.preco).toFixed(2).replace(".", ",")}
-  </div>
-
-  <button class="botao"
-  onclick="criarContaFirebase()">
-  🚀 Criar minha conta
-</button>
-
-        
-
-      }
-
-
-      lista.forEach(function(produto) {
-
-
-        const card =
-          document.createElement("div");
-
-
-        card.className =
-          "produto";
-
-
-        let imagem;
-
-
-        if (produto.foto) {
-
-          imagem = `
-
-            <div class="foto-produto">
-
-              <img
-                src="${produto.foto}"
-                alt="${produto.nome}"
-              >
-
-            </div>
-
-          `;
-
-        } else {
-
-          imagem = `
-
-            <div class="foto-produto">
-
-              ${produto.emoji || "📦"}
-
-            </div>
-
-          `;
-
-        }
-
-
         card.innerHTML = `
 
           <div class="preco">
